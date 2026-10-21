@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Ziron Pro Brand Logo Color System */
+  --purple-main: #4D11A8;
+  --purple-2: #8F2CF4;
+  --purple-3: #6620EE;
+  --navy-blue: #170349;
+  --darker: #0D1420;
 }
 
 @theme inline {
