@@ -27,7 +27,7 @@ type Project = {
   industry: string;
   kind: string;
   description: string;
-  url: string;
+  url?: string;
   displayUrl?: string;
   tone: string;
   image: string;
@@ -44,7 +44,7 @@ const PROJECTS: Project[] = [
   {
     id: "w1",
     title: "Biznorx Realty",
-    industry: "Real estate",
+    industry: "Real Estate",
     kind: "Property Showcase",
     description:
       "A high-performance real estate portal tailored for premium property listings, interactive virtual tours, and automated inquiry capture across mobile and desktop.",
@@ -59,7 +59,7 @@ const PROJECTS: Project[] = [
       { label: "Load Speed", value: "< 1.2s" },
       { label: "Inquiry Lift", value: "+44%" },
     ],
-    url: "https://biznorxrealty.com",
+    url: "https://biznorxrealty.com/",
     displayUrl: "biznorxrealty.com",
     tone: P,
     image: "/websites/biznorx-realty.jpg",
@@ -67,10 +67,10 @@ const PROJECTS: Project[] = [
   {
     id: "w2",
     title: "Vila Ventures",
-    industry: "Real estate",
+    industry: "Real Estate",
     kind: "Luxury Estates & Villas",
     description:
-      "Editorial-style digital experience engineered to showcase luxury vacation villas and high-yield estate investments with high-resolution imagery and direct inquiry booking.",
+      "An editorial-style digital experience showcasing luxury vacation villas and premium estate investments through high-resolution imagery and direct inquiry options.",
     deliverables: [
       "Luxury UI/UX",
       "Brochure Downloads",
@@ -82,54 +82,54 @@ const PROJECTS: Project[] = [
       { label: "Bounce Rate", value: "-28%" },
       { label: "Bookings", value: "+3.2x" },
     ],
-    url: "https://vilaventures.com",
-    displayUrl: "vilaventures.com",
+    url: "https://vilaventures.ae/",
+    displayUrl: "vilaventures.ae",
     tone: P2,
     image: "/websites/vila-ventures.jpg",
   },
   {
     id: "w3",
     title: "Delta Equipment",
-    industry: "Retail & Equipment",
+    industry: "Heavy Equipment",
     kind: "Machinery Catalogue",
     description:
-      "Robust commercial product catalogue with detailed specification sheets, request-a-quote flows, and instant part lookup systems for commercial contractors.",
+      "A professional equipment website showcasing heavy machinery, product specifications, equipment categories, and solutions for commercial and industrial customers.",
     deliverables: [
       "Product Catalogue",
-      "Instant RFQ Flow",
-      "Technical Specs Viewer",
-      "SEO Architecture",
+      "Equipment Showcase",
+      "Technical Specifications",
+      "SEO Optimization",
     ],
     metrics: [
       { label: "Catalog Items", value: "1,200+" },
-      { label: "Quote Speed", value: "Instant" },
-      { label: "Organic Search", value: "+62%" },
+      { label: "Quote Requests", value: "Streamlined" },
+      { label: "Mobile Experience", value: "Optimized" },
     ],
-    url: "https://deltaequipment.com",
-    displayUrl: "deltaequipment.com",
+    url: "https://deltaequip.net/",
+    displayUrl: "deltaequip.net",
     tone: K,
     image: "/websites/delta-equipment.jpg",
   },
   {
     id: "w4",
-    title: "Energex",
+    title: "Energex Equipment Rental",
     industry: "Energy & Power",
-    kind: "Clean Solar Solutions",
+    kind: "Generator Rental Solutions",
     description:
-      "Modern clean energy website with an intuitive solar savings calculator, client success stories, and seamless residential and commercial appointment booking.",
+      "A modern equipment rental website presenting generator rental solutions, power capacities, technical specifications, and dependable power support for commercial and industrial projects.",
     deliverables: [
-      "Solar Calculator",
-      "Consultation Booking",
-      "Case Study Hub",
-      "Custom Animation",
+      "Generator Showcase",
+      "Rental Solutions",
+      "Technical Specifications",
+      "Custom Animations",
     ],
     metrics: [
-      { label: "Conversion Rate", value: "4.8%" },
-      { label: "Install Queries", value: "+55%" },
-      { label: "Page Speed", value: "97/100" },
+      { label: "Power Range", value: "20–1500 kVA" },
+      { label: "Technical Support", value: "24/7" },
+      { label: "Ambient Design", value: "50°C" },
     ],
-    url: "https://energex.com",
-    displayUrl: "energex.com",
+    url: "https://energexequip.ae/",
+    displayUrl: "energexequip.ae",
     tone: P3,
     image: "/websites/energex.jpg",
   },
@@ -139,43 +139,43 @@ const PROJECTS: Project[] = [
     industry: "Energy & Power",
     kind: "Industrial Power Systems",
     description:
-      "Industrial corporate presence communicating engineering precision, large-scale battery storage capabilities, and turnkey power infrastructure for industrial complexes.",
+      "A corporate digital presence highlighting industrial power solutions, engineering capabilities, and reliable energy infrastructure for commercial and industrial clients.",
     deliverables: [
       "Corporate Website",
       "Solutions Architecture",
-      "Client Portal Entry",
-      "Compliance Standards",
+      "Service Showcase",
+      "Responsive Design",
     ],
     metrics: [
-      { label: "B2B Leads", value: "+70%" },
-      { label: "Avg Session", value: "3m 40s" },
-      { label: "Mobile Score", value: "99/100" },
+      { label: "Industry", value: "Energy" },
+      { label: "Solutions", value: "Industrial" },
+      { label: "Experience", value: "Responsive" },
     ],
-    url: "https://100power.com",
-    displayUrl: "100power.com",
+    url: "https://100poweruae.com/en",
+    displayUrl: "100poweruae.com",
     tone: P,
     image: "/websites/100-power.jpg",
   },
   {
     id: "w6",
-    title: "Maxline",
+    title: "Maxline Global",
     industry: "Logistics",
     kind: "Freight & Supply Chain",
     description:
-      "Dynamic logistics platform featuring fleet capability matrix, streamlined rate calculation requests, and end-to-end supply chain transparency.",
+      "A professional logistics website presenting freight services, transportation capabilities, and supply chain solutions through a streamlined digital experience.",
     deliverables: [
-      "Fleet Showcase",
-      "Rate Estimate Form",
-      "Route Capabilities",
-      "Fast Quotations",
+      "Service Showcase",
+      "Logistics Solutions",
+      "Inquiry Forms",
+      "Responsive Design",
     ],
     metrics: [
-      { label: "Quote Inquiries", value: "+40%" },
-      { label: "Response Time", value: "< 2hr" },
-      { label: "User Trust", value: "99.4%" },
+      { label: "Industry", value: "Logistics" },
+      { label: "Services", value: "Freight & Supply Chain" },
+      { label: "Experience", value: "Responsive" },
     ],
-    url: "https://maxline.com",
-    displayUrl: "maxline.com",
+    url: "https://maxlineglobal.com/",
+    displayUrl: "maxlineglobal.com",
     tone: K,
     image: "/websites/maxline.jpg",
   },
@@ -185,45 +185,67 @@ const PROJECTS: Project[] = [
     industry: "Technology",
     kind: "Digital Platform & SaaS",
     description:
-      "Sleek SaaS product landing page with dark-mode accents, interactive feature highlights, API documentation preview, and friction-free user onboarding.",
+      "A sleek SaaS product concept featuring dark-mode accents, interactive feature highlights, modern interface elements, and a streamlined user experience.",
     deliverables: [
       "SaaS Landing Page",
       "Interactive Features",
-      "Pricing Matrix",
+      "Pricing Interface",
       "User Onboarding",
     ],
     metrics: [
-      { label: "Signup Rate", value: "+38%" },
-      { label: "Page Load", value: "0.8s" },
-      { label: "Product Demos", value: "2.4x" },
+      { label: "Design", value: "Modern UI" },
+      { label: "Experience", value: "Interactive" },
+      { label: "Theme", value: "Dark Mode" },
     ],
-    url: "https://qordx.com",
-    displayUrl: "qordx.com",
+    // No URL for Qordx
     tone: P2,
     image: "/websites/qordx.jpg",
   },
   {
     id: "w8",
-    title: "Qordx",
-    industry: "Technology",
-    kind: "Digital Platform & SaaS",
+    title: "Hot Wheel Motors",
+    industry: "Automotive",
+    kind: "Car Showroom",
     description:
-      "Sleek SaaS product landing page with dark-mode accents, interactive feature highlights, API documentation preview, and friction-free user onboarding.",
+      "A premium automotive website designed to showcase vehicles, highlight showroom offerings, and deliver an engaging browsing experience for prospective buyers.",
     deliverables: [
-      "SaaS Landing Page",
-      "Interactive Features",
-      "Pricing Matrix",
-      "User Onboarding",
+      "Vehicle Showcase",
+      "Automotive UI/UX",
+      "Showroom Presentation",
+      "Responsive Design",
     ],
     metrics: [
-      { label: "Signup Rate", value: "+38%" },
-      { label: "Page Load", value: "0.8s" },
-      { label: "Product Demos", value: "2.4x" },
+      { label: "Industry", value: "Automotive" },
+      { label: "Experience", value: "Interactive" },
+      { label: "Layout", value: "Responsive" },
     ],
-    url: "https://qordx.com",
-    displayUrl: "qordx.com",
+    url: "https://hotwheelmotors.com/",
+    displayUrl: "hotwheelmotors.com",
     tone: P2,
     image: "/websites/hot-wheels.png",
+  },
+  {
+    id: "w9",
+    title: "InfraGuide UAE",
+    industry: "Infrastructure",
+    kind: "Infrastructure Solutions",
+    description:
+      "A professional digital platform presenting infrastructure-related services and solutions through structured content, clear navigation, and a modern corporate interface.",
+    deliverables: [
+      "Corporate Website",
+      "Service Presentation",
+      "Content Architecture",
+      "Responsive Design",
+    ],
+    metrics: [
+      { label: "Industry", value: "Infrastructure" },
+      { label: "Experience", value: "User-Focused" },
+      { label: "Layout", value: "Responsive" },
+    ],
+    url: "https://www.infraguideuae.com/",
+    displayUrl: "infraguideuae.com",
+    tone: P2,
+    image: "/websites/infra-guide.png",
   },
 ];
 
@@ -302,28 +324,36 @@ const DetailsModal: React.FC<{ p: Project; onClose: () => void }> = ({
                 <span />
                 <span />
               </div>
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="zw-browser-url"
-                title="Open live site in new tab"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="13"
-                  height="13"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  aria-hidden="true"
+              {p.url ? (
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="zw-browser-url"
+                  title="Open live site in new tab"
                 >
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0110 0v4" />
-                </svg>
-                <span>{p.displayUrl || p.url.replace(/^https?:\/\//, "")}</span>
-                <ArrowUpRight />
-              </a>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    aria-hidden="true"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                  </svg>
+                  <span>
+                    {p.displayUrl || p.url.replace(/^https?:\/\//, "")}
+                  </span>
+                  <ArrowUpRight />
+                </a>
+              ) : (
+                <span className="zw-browser-url" style={{ cursor: "default" }}>
+                  <span>{p.displayUrl || "Concept Design"}</span>
+                </span>
+              )}
             </div>
 
             <div
@@ -377,20 +407,22 @@ const DetailsModal: React.FC<{ p: Project; onClose: () => void }> = ({
             )}
 
             {/* Live website link CTA */}
-            <div className="zw-cta-wrap">
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="zw-live-btn"
-              >
-                <span>Visit Live Website</span>
-                <ArrowUpRight />
-              </a>
-              <span className="zw-cta-note">
-                Live URL: <b>{p.displayUrl || p.url}</b>
-              </span>
-            </div>
+            {p.url ? (
+              <div className="zw-cta-wrap">
+                <a
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="zw-live-btn"
+                >
+                  <span>Visit Live Website</span>
+                  <ArrowUpRight />
+                </a>
+                <span className="zw-cta-note">
+                  Live URL: <b>{p.displayUrl || p.url}</b>
+                </span>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -723,4 +755,3 @@ const CSS = `
   .zw-modal-sheet{animation:none}
 }
 `;
-

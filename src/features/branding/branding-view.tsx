@@ -3,8 +3,7 @@
 /**
  * Ziron Pro — Branding page (route: /branding)
  * Card: hover smoothly scrolls through the brand guideline strip (GPU transform).
- * Click: opens a modal with the scrollable strip and project details.
- * Only the strip image is used (no PDF, no cover image).
+ * Click: opens a modal with the scrollable strip, project details, and direct PDF access.
  */
 
 import React, {
@@ -30,6 +29,7 @@ type Project = {
   industry: string;
   kind: string;
   strip: string;
+  pdf: string;
   pages: number;
   description: string;
   deliverables: string[];
@@ -39,55 +39,153 @@ const PROJECTS: Project[] = [
   {
     id: "b1",
     title: "Biznorx Realty",
-    industry: "Real estate",
-    kind: "Corporate Identity & Guidelines",
+    industry: "Real Estate",
+    kind: "Corporate Identity & Brand Guidelines",
     strip: "/branding/previews/biznorx-strip.jpg",
+    pdf: "/branding/biznorx.pdf",
     pages: 32,
     description:
-      "A sophisticated, architectural visual identity for a premier real estate firm. Features precision geometric logo marks, deep purple and navy brand palette, stationery systems, and comprehensive brand usage guidelines.",
+      "A refined corporate identity crafted for a premier modern real estate brand. The visual system combines architectural precision, geometric monogram elements, and an authoritative purple and navy palette across stationery, marketing collaterals, environmental signage, and comprehensive brand guidelines.",
     deliverables: [
-      "Primary & Secondary Logo Marks",
-      "Color Hierarchy & Swatches",
-      "Corporate Typography",
-      "Stationery & Business Cards",
+      "Primary & Secondary Logo System",
+      "Brand Colors & Palette Specifications",
+      "Typography & Visual Hierarchy",
+      "Corporate Stationery & Letterheads",
       "Signage & Billboard System",
-      "Complete 32-Page Brand Book",
+      "Complete 32-Page Brand Guidelines",
     ],
   },
   {
     id: "b2",
-    title: "Hot Wheel Driving School",
-    industry: "Automotive & Education",
-    kind: "Visual Identity & Fleet Livery",
+    title: "Hot Wheel Motors",
+    industry: "Automotive",
+    kind: "Automotive Brand Identity & Applications",
     strip: "/branding/previews/hot-wheel-strip.jpg",
+    pdf: "/branding/hot-wheel.pdf",
     pages: 40,
     description:
-      "High-energy, modern automotive educational brand identity built on trust and dynamic motion. Features custom vehicle fleet livery, student learning collaterals, instructor apparel, and complete digital brand standards.",
+      "A bold automotive identity designed to communicate energy, movement, and reliability. The brand system extends across vehicle graphics, promotional materials, staff uniforms, certificates, and supporting brand assets to create a consistent visual presence across physical and digital touchpoints.",
     deliverables: [
-      "Dynamic Motion Logo System",
-      "Vehicle Fleet & Livery Design",
-      "Student Materials & Badges",
-      "Staff & Instructor Uniforms",
-      "Certificates & Stationery",
-      "Complete 40-Page Brand Book",
+      "Custom Logo & Visual Identity",
+      "Vehicle Graphics & Fleet Branding",
+      "Promotional Materials & Badges",
+      "Staff Uniforms & Apparel Standards",
+      "Certificates & Corporate Stationery",
+      "Complete 40-Page Brand Guidelines",
     ],
   },
   {
     id: "b3",
     title: "Sphere IT Solutions",
-    industry: "Technology & SaaS",
-    kind: "Tech Brand System & Guidelines",
+    industry: "Technology",
+    kind: "Enterprise Tech System & Guidelines",
     strip: "/branding/previews/sphere-it-strip.jpg",
+    pdf: "/branding/sphere-it.pdf",
     pages: 19,
     description:
-      "A forward-thinking technology brand identity embodying digital transformation and data intelligence. Includes bespoke tech iconography, dark-mode color palettes, pitch decks, and digital UI guidelines.",
+      "A contemporary technology identity built around cloud connectivity, data intelligence, and digital transformation. Combines electric cyan and deep navy color codes, scalable digital product iconography, and investor presentation systems.",
     deliverables: [
-      "Tech Iconography & Symbol",
-      "Digital Product Color System",
-      "Investor Pitch Deck Template",
-      "Iconography & Data Graphics",
-      "Office Signage & Swag",
-      "Complete 19-Page Brand Book",
+      "Primary Logo & Enterprise Monogram",
+      "Brand Colors & Technical Typography",
+      "Digital Graphics & UI Iconography",
+      "Presentation & Pitch Deck Templates",
+      "Office Signage & Branded Collateral",
+      "Complete 19-Page Brand Guidelines",
+    ],
+  },
+  {
+    id: "b4",
+    title: "Vila Ventures",
+    industry: "Lifestyle & Wellness",
+    kind: "Brand Kit & Visual Identity",
+    strip: "/branding/previews/vila-ventures-strip.jpg",
+    pdf: "/branding/vila-ventures.pdf",
+    pages: 8,
+    description:
+      "A warm, soul-centered visual brand identity built on the core mantra 'Rooted In Joy.' Blends terracotta sun tones, custom meditative brand illustrations, and modern typography across wellness retreats, lifestyle packaging, and mindful apparel.",
+    deliverables: [
+      "Custom Hand-Drawn Brand Illustration",
+      "Sun Flower & Clash Grotesk Typography",
+      "Warm Sunburst Terracotta Color Codes",
+      "Social Media & Content Kit",
+      "Merchandise & Apparel Applications",
+      "Complete 8-Page Brand Kit",
+    ],
+  },
+  {
+    id: "b5",
+    title: "Qordz",
+    industry: "Consumer Tech",
+    kind: "Tech Lifestyle Brand System",
+    strip: "/branding/previews/qordz-strip.jpg",
+    pdf: "/branding/qordz.pdf",
+    pages: 13,
+    description:
+      "A cutting-edge tech accessories and mobile power brand created under the tagline 'Tech on the Go.' Highlights an electric charging bolt 'Q' icon, emerald neon accents, and high-impact consumer electronics retail packaging guidelines.",
+    deliverables: [
+      "Lightning Bolt 'Q' Monogram",
+      "Emerald Glow (#00A072) & Carbon Palette",
+      "Gilroy & Inter Typography Hierarchy",
+      "Retail Packaging & Box Guidelines",
+      "E-Commerce & Digital Ad Templates",
+      "Complete 13-Page Brand Guidelines",
+    ],
+  },
+  {
+    id: "b6",
+    title: "Siddh Global Trading",
+    industry: "Automotive",
+    kind: "Corporate Brand Kit & Guidelines",
+    strip: "/branding/previews/siddh-global-strip.jpg",
+    pdf: "/branding/siddh-global.pdf",
+    pages: 8,
+    description:
+      "An authoritative automotive spare parts and global trade brand based in UAE: 'Your Reliable Partner on the Road, Trusted by Millions.' Features a precision engine piston 'S' monogram, deep crimson corporate palette, and international export documentation suites.",
+    deliverables: [
+      "Engine Piston 'S' Emblem",
+      "Crimson Red (#A83636) & Steel Charcoal",
+      "Aktiv Grotesk & Montserrat Typography",
+      "Corporate Stationery & Letterhead Suite",
+      "International Trade Business Cards",
+      "Complete 8-Page Corporate Brand Kit",
+    ],
+  },
+  {
+    id: "b7",
+    title: "Mr. Hopps",
+    industry: "Lifestyle & Wellness",
+    kind: "Brand Mark & Identity Kit",
+    strip: "/branding/previews/mrhopps-strip.jpg",
+    pdf: "/branding/mrhopps.pdf",
+    pages: 8,
+    description:
+      "A vibrant, friendly lifestyle brand crafted around the philosophy 'Life, Simplified.' Showcases an agile geometric hare emblem in energetic mandarin orange and cobalt blue, engineered for modern retail, delivery, and mobile app icons.",
+    deliverables: [
+      "Geometric Hare Logo Emblem",
+      "Mandarin Orange & Cobalt Palette",
+      "Modern Geometric Wordmark",
+      "Mobile App Icon & Favicon Suite",
+      "Retail Packaging & Merchandise Mockups",
+      "Complete 8-Page Identity Kit",
+    ],
+  },
+  {
+    id: "b8",
+    title: "M2Mtek",
+    industry: "Technology",
+    kind: "IoT & Telemetry Brand Guidelines",
+    strip: "/branding/previews/m2mtek-strip.jpg",
+    pdf: "/branding/m2mtek.pdf",
+    pages: 16,
+    description:
+      "An enterprise IoT and telecommunications brand system built on the vision 'Bridging Technologies.' Highlights an interconnected 'M-T' bridge symbol with precision electric cyan and dark slate geometry, built for high-tech scalability.",
+    deliverables: [
+      "Interconnected 'MT' Bridge Monogram",
+      "Electric Cyan & Deep Slate Palette",
+      "Precision Clear Space & Grid Standards",
+      "Light & Dark Mode Interface Assets",
+      "Digital Product & Telematics Icons",
+      "Complete 16-Page Brand Guidelines",
     ],
   },
 ];
@@ -148,15 +246,12 @@ const Card = memo(function Card({
       aria-label={`View ${p.title} brand guidelines`}
     >
       <span className="zb-shot">
-        {/* Only mount the image once the card is near the viewport */}
-        {seen && (
-          <StripImg
-            src={p.strip}
-            alt={`${p.title} Brand Guidelines`}
-            className="zb-strip"
-          />
-        )}
         <span className="zb-badge">{p.pages} Pages</span>
+        <StripImg
+          src={p.strip}
+          alt={`${p.title} brand guidelines preview`}
+          className="zb-strip"
+        />
         <span className="zb-view">
           View Guidelines <ArrowUpRight />
         </span>
@@ -200,15 +295,28 @@ const BrandModal: React.FC<{
             <span className="zb-modal-tag">{p.industry}</span>
             <h2 className="zb-modal-title">{p.title}</h2>
           </div>
-          <button
-            ref={closeRef}
-            type="button"
-            className="zs-close"
-            onClick={onClose}
-            aria-label="Close"
-          >
-            <CloseIcon />
-          </button>
+          <div className="zb-modal-actions">
+            {p.pdf && (
+              <a
+                href={p.pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="zb-open-pdf-btn"
+              >
+                <span>Open PDF</span>
+                <ArrowUpRight />
+              </a>
+            )}
+            <button
+              ref={closeRef}
+              type="button"
+              className="zs-close"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </button>
+          </div>
         </div>
 
         <div className="zb-modal-body">
@@ -218,7 +326,7 @@ const BrandModal: React.FC<{
               tabIndex={0}
               aria-label={`${p.title} brand guidelines, scrollable`}
             >
-              {/* Already cached from the card, so this opens instantly */}
+              {/* Cached from the card, so this opens and renders instantly */}
               <StripImg
                 src={p.strip}
                 alt={`${p.title} brand pages`}
@@ -267,6 +375,17 @@ const BrandModal: React.FC<{
             </div>
 
             <div className="zb-cta-wrap">
+              {p.pdf && (
+                <a
+                  href={p.pdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="zb-pdf-btn"
+                >
+                  <span>Download Full PDF Guidelines ({p.pages} Pages)</span>
+                  <ArrowUpRight />
+                </a>
+              )}
               <a
                 href={wa}
                 target="_blank"
@@ -339,9 +458,20 @@ export default function BrandingPage({ whatsappNumber, backHref }: Props) {
 }
 
 const CSS = `
-.zb-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2vw,32px)}
-@media (max-width:1000px){ .zb-grid{grid-template-columns:repeat(2,1fr)} }
-@media (max-width:620px){ .zb-grid{grid-template-columns:1fr} }
+.zb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.8vw, 28px);
+}
+@media (max-width: 1200px) {
+  .zb-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 860px) {
+  .zb-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .zb-grid { grid-template-columns: 1fr; }
+}
 
 .zb-card{all:unset; box-sizing:border-box; cursor:pointer; display:flex; flex-direction:column; gap:14px}
 
@@ -377,6 +507,12 @@ const CSS = `
     will-change:transform;
   }
 }
+@supports not (height:1cqh){
+  .zb-card:hover .zb-strip, .zb-card:focus-visible .zb-strip{
+    transform:translateY(-75%);
+    transition:transform 12s cubic-bezier(.25,0,.2,1);
+  }
+}
 
 .zb-img-fallback{
   position:absolute; inset:0; display:grid; place-items:center;
@@ -401,13 +537,13 @@ const CSS = `
 
 .zb-cap{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
 .zb-title-wrap{display:flex; flex-direction:column; gap:3px}
-.zb-ind{font-weight:800; font-size:1.2rem; letter-spacing:-.02em; color:var(--black)}
+.zb-ind{font-weight:800; font-size:1.15rem; letter-spacing:-.02em; color:var(--black); line-height:1.2}
 .zb-ind-tag{font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--purple)}
-.zb-kind{font-size:.86rem; opacity:.65; text-align:right}
+.zb-kind{font-size:.84rem; opacity:.65; text-align:right}
 
 /* Modal */
 .zb-modal-sheet{
-  width:min(1120px, 96vw); max-height:min(90vh, 880px);
+  width:min(1140px, 96vw); max-height:min(90vh, 880px);
   background:#fff; border-radius:24px; display:flex; flex-direction:column;
   overflow:hidden; box-shadow:0 24px 64px rgba(13,20,32,.35);
   animation:zwPop .35s cubic-bezier(.2,.8,.2,1);
@@ -421,6 +557,14 @@ const CSS = `
 .zb-modal-title-group{display:flex; flex-direction:column; gap:2px}
 .zb-modal-tag{font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--purple)}
 .zb-modal-title{margin:0; font-size:clamp(1.2rem,2vw,1.65rem); font-weight:800; letter-spacing:-.03em; color:var(--black)}
+
+.zb-modal-actions{display:flex; align-items:center; gap:10px}
+.zb-open-pdf-btn{
+  display:inline-flex; align-items:center; gap:6px; background:var(--tint);
+  color:var(--black); text-decoration:none; font-size:.82rem; font-weight:700;
+  padding:7px 14px; border-radius:999px; transition:background .2s, color .2s, transform .2s;
+}
+.zb-open-pdf-btn:hover{background:var(--purple); color:#fff; transform:translateY(-1px)}
 
 .zb-modal-body{flex:1; min-height:0; display:grid; grid-template-columns:1.35fr 1fr; overflow:hidden}
 @media (max-width:900px){
@@ -471,6 +615,16 @@ const CSS = `
 .zb-spec-lbl{font-size:.72rem; opacity:.65; line-height:1.2}
 
 .zb-cta-wrap{margin-top:auto; padding-top:14px; display:flex; flex-direction:column; gap:8px}
+
+.zb-pdf-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  background:var(--tint); color:var(--black); text-decoration:none; font-weight:700;
+  font-size:.88rem; padding:12px 20px; border-radius:999px;
+  transition:background .2s, color .2s, transform .2s;
+  border:1.5px solid var(--line);
+}
+.zb-pdf-btn:hover{background:var(--black); color:#fff; transform:translateY(-2px); border-color:var(--black)}
+
 .zb-wa-btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
   background:var(--purple); color:#fff; text-decoration:none; font-weight:700;
@@ -482,7 +636,7 @@ const CSS = `
 
 @media (prefers-reduced-motion: reduce){
   .zb-shot{animation:none}
-  .zb-shot, .zb-strip, .zb-wa-btn{transition:none}
+  .zb-shot, .zb-strip, .zb-wa-btn, .zb-open-pdf-btn, .zb-pdf-btn{transition:none}
   .zb-modal-sheet{animation:none}
   .zb-scroll-viewer{scroll-behavior:auto}
 }
