@@ -17,18 +17,30 @@ import React, { useEffect, useRef, useState } from "react";
 /* ---------- shared bits ---------- */
 export const ArrowUpRight = () => (
   <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-    <path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M7 17L17 7M9 7h8v8"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 export const CloseIcon = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+    <path
+      d="M6 6l12 12M18 6L6 18"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+    />
   </svg>
 );
 
-export const waLink = (number: string, text: string) =>
-  `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+export const waLink = (number: string = "971542588446", text: string) =>
+  `https://wa.me/${(number || "971542588446").replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 
 /** Fires once when the element scrolls into view (for the reveal animation). */
 export function useSeen<T extends Element>() {
@@ -47,7 +59,7 @@ export function useSeen<T extends Element>() {
           io.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -56,7 +68,10 @@ export function useSeen<T extends Element>() {
 }
 
 /** Locks page scroll and closes on Escape while a modal is open. */
-export function useModal(onClose: () => void, onKey?: (e: KeyboardEvent) => void) {
+export function useModal(
+  onClose: () => void,
+  onKey?: (e: KeyboardEvent) => void,
+) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -80,7 +95,14 @@ export const Filters: React.FC<{
 }> = ({ items, value, onChange, label }) => (
   <div className="zs-filters" role="tablist" aria-label={label}>
     {items.map((f) => (
-      <button key={f} type="button" role="tab" aria-selected={value === f} className={value === f ? "on" : ""} onClick={() => onChange(f)}>
+      <button
+        key={f}
+        type="button"
+        role="tab"
+        aria-selected={value === f}
+        className={value === f ? "on" : ""}
+        onClick={() => onChange(f)}
+      >
         {f}
       </button>
     ))}
@@ -108,7 +130,7 @@ export default function CategoryShell({
   waText,
   ctaTitle,
   ctaLabel,
-  whatsappNumber = "910000000000",
+  whatsappNumber = "971542588446",
   backHref = "/",
   label,
   children,
@@ -130,28 +152,60 @@ export default function CategoryShell({
       <style>{SHELL_CSS}</style>
 
       <header className="zs-head">
-        <div className="zs-rings" aria-hidden="true" style={{ transform: `translate(-50%, -50%) rotate(${y * 0.12}deg)` }}>
-          <span /><span /><span />
+        <div
+          className="zs-rings"
+          aria-hidden="true"
+          style={{ transform: `translate(-50%, -50%) rotate(${y * 0.12}deg)` }}
+        >
+          <span />
+          <span />
+          <span />
         </div>
 
         <nav className="zs-nav">
           <a className="zs-logo" href={backHref} aria-label="Ziron Pro home">
-            <img src="/logo/white-logo.png" alt="Ziron Pro" className="zs-logo-img" />
+            <img
+              src="/logo/white-logo.png"
+              alt="Ziron Pro"
+              className="zs-logo-img"
+            />
           </a>
-          <a className="zs-wa" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp us</a>
+          <a
+            className="zs-wa"
+            href={wa}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp us
+          </a>
         </nav>
 
-        <div className="zs-head-body" style={{ transform: `translateY(${Math.min(y, 400) * 0.25}px)`, opacity: 1 - Math.min(y / 520, 1) }}>
+        <div
+          className="zs-head-body"
+          style={{
+            transform: `translateY(${Math.min(y, 400) * 0.25}px)`,
+            opacity: 1 - Math.min(y / 520, 1),
+          }}
+        >
           <a className="zs-back" href={backHref}>
             <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-              <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M15 5l-7 7 7 7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             All work
           </a>
           <h1 className="zs-h1">
             {words.map((w, i) => (
               <span className="zs-word" key={i}>
-                <span style={{ animationDelay: `${0.1 + i * 0.09}s` }}>{w}</span>{" "}
+                <span style={{ animationDelay: `${0.1 + i * 0.09}s` }}>
+                  {w}
+                </span>{" "}
               </span>
             ))}
           </h1>

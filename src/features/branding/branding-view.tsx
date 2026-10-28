@@ -271,7 +271,7 @@ const BrandModal: React.FC<{
   p: Project;
   whatsappNumber?: string;
   onClose: () => void;
-}> = ({ p, whatsappNumber = "910000000000", onClose }) => {
+}> = ({ p, whatsappNumber = "971542588446", onClose }) => {
   const closeRef = useRef<HTMLButtonElement | null>(null);
   useModal(onClose);
   useEffect(() => closeRef.current?.focus(), []);

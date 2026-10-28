@@ -447,7 +447,7 @@ const Detail: React.FC<{
 };
 
 export default function SeoPage({
-  whatsappNumber = "910000000000",
+  whatsappNumber = "971542588446",
   backHref,
 }: Props) {
   const [filter, setFilter] = useState("All");

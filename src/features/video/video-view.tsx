@@ -192,7 +192,7 @@ function Card({
 function Player({
   v,
   onClose,
-  whatsappNumber = "919999999999",
+  whatsappNumber = "971542588446",
 }: {
   v: Video;
   onClose: () => void;

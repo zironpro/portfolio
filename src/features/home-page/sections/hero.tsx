@@ -17,7 +17,7 @@
  * Colours (Ziron Pro only): white 60% · purple 30% · black 10%
  *
  * Props
- *  - whatsappNumber: digits only, with country code (e.g. "919876543210")
+ *  - whatsappNumber: digits only, with country code (e.g. "971542588446")
  */
 
 import React, { useEffect, useRef, useState } from "react";
@@ -73,7 +73,7 @@ const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 /** Extra scroll distance (in vh) needed to reveal the chooser. Smaller = fewer swipes. */
 const TRAVEL = 60;
 
-export default function Hero({ whatsappNumber = "910000000000" }: HeroProps) {
+export default function Hero({ whatsappNumber = "971542588446" }: HeroProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const target = useRef(0);
   const smooth = useRef(0);
@@ -130,7 +130,7 @@ export default function Hero({ whatsappNumber = "910000000000" }: HeroProps) {
   const t = easeOut(clamp(p / 0.85)); // 0 → 1 : headline lifts, chooser arrives
   const ready = p > 0.7;
 
-  const waHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  const waHref = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
     "Hi Ziron Pro, I'd like to talk about a project.",
   )}`;
 

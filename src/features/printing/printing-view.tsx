@@ -36,7 +36,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "350gsm G.F Smith Colorplan",
     tone: "#B8452E",
     ratio: "4/5",
-    specs: ["Gold metallic hot stamp", "Matte velvet lamination", "Hand-stitched spine"],
+    specs: [
+      "Gold metallic hot stamp",
+      "Matte velvet lamination",
+      "Hand-stitched spine",
+    ],
     description:
       "Multi-course dining presentation crafted on heavyweight textured card with fingerprint-resistant velvet coating.",
   },
@@ -48,7 +52,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "Biodegradable Tri-layer Barrier",
     tone: "#386B50",
     ratio: "1/1",
-    specs: ["Eco-friendly water-based inks", "Resealable aroma zipper", "One-way degassing valve"],
+    specs: [
+      "Eco-friendly water-based inks",
+      "Resealable aroma zipper",
+      "One-way degassing valve",
+    ],
     description:
       "Retail coffee packaging line preserving peak roasted bean freshness with a raw organic tactile feel.",
   },
@@ -60,7 +68,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "1200gsm Greyboard wrapped in Wibalin",
     tone: "#1D1A20",
     ratio: "4/3",
-    specs: ["Magnetic snap closure", "Debossed logo monogram", "Precision die-cut foam insert"],
+    specs: [
+      "Magnetic snap closure",
+      "Debossed logo monogram",
+      "Precision die-cut foam insert",
+    ],
     description:
       "High-end jewelry and accessory presentation boxes engineered for structural weight and unboxing ceremony.",
   },
@@ -72,7 +84,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "170gsm Fedrigoni Tatami",
     tone: "#1F2A55",
     ratio: "4/5",
-    specs: ["Buckram linen hardcover", "Blind deboss spine & face", "Lay-flat Swiss binding"],
+    specs: [
+      "Buckram linen hardcover",
+      "Blind deboss spine & face",
+      "Lay-flat Swiss binding",
+    ],
     description:
       "Architectural development prospectus for luxury penthouses with true-color photography reproduction.",
   },
@@ -84,7 +100,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "600gsm Cotton Lettra",
     tone: "#FF6A4D",
     ratio: "1/1",
-    specs: ["Deep relief letterpress", "Waxed cotton eyelet cord", "Foil serialized number tags"],
+    specs: [
+      "Deep relief letterpress",
+      "Waxed cotton eyelet cord",
+      "Foil serialized number tags",
+    ],
     description:
       "Signature tactile brand touchpoints attached to designer capsule collections.",
   },
@@ -96,7 +116,11 @@ const PRINT_PROJECTS: PrintProject[] = [
     stock: "300gsm FSC Certified Recycled",
     tone: "#7CF2C0",
     ratio: "4/3",
-    specs: ["Business card slot slit", "Spot gloss clinic seal", "Soy-based pantone matching"],
+    specs: [
+      "Business card slot slit",
+      "Spot gloss clinic seal",
+      "Soy-based pantone matching",
+    ],
     description:
       "Executive presentation folders and intake stationery designed to establish immediate clinical authority.",
   },
@@ -231,14 +255,17 @@ const Detail: React.FC<{
 };
 
 export default function PrintingPage({
-  whatsappNumber = "910000000000",
+  whatsappNumber = "971542588446",
   backHref,
 }: Props) {
   const [filter, setFilter] = useState("All");
   const [selected, setSelected] = useState<PrintProject | null>(null);
 
   const industries = useMemo(
-    () => ["All", ...Array.from(new Set(PRINT_PROJECTS.map((p) => p.industry)))],
+    () => [
+      "All",
+      ...Array.from(new Set(PRINT_PROJECTS.map((p) => p.industry))),
+    ],
     [],
   );
   const shown = useMemo(
@@ -249,7 +276,10 @@ export default function PrintingPage({
     [filter],
   );
   const close = useCallback(() => setSelected(null), []);
-  const wa = waLink(whatsappNumber, "Hi Ziron Pro, I'd like a custom print quote.");
+  const wa = waLink(
+    whatsappNumber,
+    "Hi Ziron Pro, I'd like a custom print quote.",
+  );
 
   return (
     <Shell
