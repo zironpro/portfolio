@@ -22,7 +22,7 @@ import Shell, {
   waLink,
 } from "../CategoryShell";
 
-import { PROJECTS } from "./data/brandProjects";
+import { PROJECTS, Project } from "./data/brandProjects";
 
 type Props = { whatsappNumber?: string; backHref?: string };
 
