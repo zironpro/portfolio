@@ -2,11 +2,18 @@
 
 /**
  * Ziron Pro — Video page (route: /video)
- * Vertical 9:16 reels. Cards show the first frame and play silently on hover.
- * Click opens a modal player with sound.
+ * Vertical 9:16 reels, 4 per row on desktop. Cards show the video's own first
+ * frame (no poster images) and play silently on hover. Click opens a modal
+ * player with sound and project details.
  */
 
-import { useCallback, useRef, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import Shell, {
   ArrowUpRight,
   CloseIcon,
@@ -21,53 +28,83 @@ type Video = {
   industry: string;
   kind: "Ad film" | "Reel" | "Product";
   duration: string;
-  slug: string; // files: /video/{slug}.mp4|.webm
+  slug: string; // files: /video/{slug}.webm & /video/{slug}.mp4
   description: string;
 };
 
 const VIDEOS: Video[] = [
   {
     id: "v1",
-    title: "Biznorx Realty",
+    title: "Via Sakan",
     industry: "Real Estate",
     kind: "Ad film",
-    duration: "0:17",
-    slug: "roots",
+    duration: "0:48",
+    slug: "via-sakan",
     description:
-      "Cinematic launch teaser for Biznorx Realty highlighting landmark architecture, urban skyline presence, and premium property development.",
+      "Cinematic architectural tour exploring bespoke luxury villa residences, modern interior finishing, and prestigious community living in the UAE.",
   },
   {
     id: "v2",
-    title: "Crystal Shield",
-    industry: "Window Film",
+    title: "The Fitness Lab",
+    industry: "Health & Fitness",
     kind: "Reel",
-    duration: "0:15",
-    slug: "crystal-shield",
+    duration: "0:37",
+    slug: "fitness-lab",
     description:
-      "Dynamic geo-targeted social reel showcasing high-performance residential window tinting and thermal heat insulation across Abu Dhabi luxury villas.",
+      "High-energy social reel presenting bespoke in-home personal training for ladies, posture alignment, and strength conditioning.",
   },
   {
     id: "v3",
-    title: "Energex Power",
-    industry: "Industrial Power",
-    kind: "Ad film",
-    duration: "0:29",
-    slug: "energex-industrial",
+    title: "Roots Wellness",
+    industry: "Beauty & Wellness",
+    kind: "Reel",
+    duration: "0:31",
+    slug: "roots",
     description:
-      "High-impact cinematic promo for Energex heavy industrial backup generators powering mega infrastructure, earthmoving, and construction sites.",
+      "Serene lifestyle video highlighting authentic Ayurvedic therapies, holistic body care, and rejuvenating natural herbal treatments.",
   },
   {
     id: "v4",
-    title: "Energex Rental",
+    title: "Vila Ventures",
+    industry: "Wellness & Lifestyle",
+    kind: "Reel",
+    duration: "0:54",
+    slug: "vila-ventures",
+    description:
+      "Inspiring journey documentary reel following transformative mindfulness sessions, therapeutic yoga postures, and personal wellness growth.",
+  },
+  {
+    id: "v5",
+    title: "Delta Equipment",
+    industry: "Industrial Equipment",
+    kind: "Ad film",
+    duration: "0:13",
+    slug: "delta",
+    description:
+      "Dynamic brand commercial showcasing Delta Equipment's premier facility and authorized JCB heavy machinery dealership in the UAE.",
+  },
+  {
+    id: "v6",
+    title: "Delta JCB 225LCM",
+    industry: "Heavy Machinery",
+    kind: "Product",
+    duration: "0:24",
+    slug: "delta-jcb-225lcm",
+    description:
+      "Heavy earthmoving machinery reel demonstrating the JCB 225LCM tracked excavator on active civil construction and excavation sites.",
+  },
+  {
+    id: "v7",
+    title: "Energex Power",
     industry: "Equipment Rental",
     kind: "Product",
     duration: "0:21",
     slug: "energex-rental",
     description:
-      "Engaging on-site walkthrough and product feature reel detailing turnkey generator rental fleet solutions and 24/7 power reliability.",
+      "On-camera walkthrough detailing turnkey commercial generator rental solutions, power backup fleets, and 24/7 technical support.",
   },
   {
-    id: "v5",
+    id: "v8",
     title: "S.A.J Legal Solicitors",
     industry: "Legal Services",
     kind: "Ad film",
@@ -77,31 +114,51 @@ const VIDEOS: Video[] = [
       "Sophisticated brand storytelling reel for S.A.J Legal Solicitors — 'Every case has a story' — emphasizing justice, advocacy, and client commitment.",
   },
   {
-    id: "v6",
+    id: "v9",
     title: "SSI Solar Safety",
-    industry: "Solar Insulation",
+    industry: "Architectural Glazing",
     kind: "Reel",
     duration: "0:17",
     slug: "ssi-insulation",
     description:
-      "Commercial installation reel highlighting Solar Safety Insulation LLC applying heat-reflective safety film on high-rise architectural facades.",
+      "Commercial high-rise installation reel showing Solar Safety Insulation LLC applying heat-reflective architectural safety film on glazed facades.",
   },
 ];
 
-/** WebM first (smaller), MP4 as fallback. */
-const Sources = ({ v }: { v: Video }) => (
+/** WebM first (smaller), MP4 as fallback. `hash` e.g. "#t=0.1" shows a frame. */
+const Sources = ({ v, hash = "" }: { v: Video; hash?: string }) => (
   <>
-    <source src={`/video/${v.slug}.webm`} type="video/webm" />
-    <source src={`/video/${v.slug}.mp4`} type="video/mp4" />
+    <source src={`/video/${v.slug}.webm${hash}`} type="video/webm" />
+    <source src={`/video/${v.slug}.mp4${hash}`} type="video/mp4" />
   </>
 );
 
 /* ---------- Card thumbnail ----------
- * Shows the video's first frame (paused). Hover plays it silently,
- * mouse-leave pauses and returns to the first frame. Only metadata is
- * loaded up front. Click opens the player. */
+ * The video itself is the thumbnail: paused on its first frame, no poster.
+ * - Mounted only once the card is near the viewport (lazy), so off-screen
+ *   cards download nothing.
+ * - preload="metadata" loads just enough to show the first frame.
+ * - Mouse hover plays it silently; leaving pauses and rewinds to the frame.
+ * - Touch devices don't trigger hover playback; a tap opens the player. */
 function Thumb({ v }: { v: Video }) {
+  const [wrap, setWrap] = useState<HTMLSpanElement | null>(null);
+  const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!wrap) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setMounted(true);
+          io.disconnect(); // mount once, keep the frame afterwards
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(wrap);
+    return () => io.disconnect();
+  }, [wrap]);
 
   const play = () => {
     const el = ref.current;
@@ -119,17 +176,27 @@ function Thumb({ v }: { v: Video }) {
 
   return (
     <span
+      ref={setWrap}
       className="zv-media"
-      onMouseEnter={play}
-      onMouseLeave={stop}
+      onPointerEnter={(e) => e.pointerType === "mouse" && play()}
+      onPointerLeave={(e) => e.pointerType === "mouse" && stop()}
       onFocus={play}
       onBlur={stop}
     >
-      <video ref={ref} muted loop playsInline preload="metadata" tabIndex={-1}>
-        {/* #t=0.1 makes iOS Safari render a frame */}
-        <source src={`/video/${v.slug}.webm#t=0.1`} type="video/webm" />
-        <source src={`/video/${v.slug}.mp4#t=0.1`} type="video/mp4" />
-      </video>
+      {mounted && (
+        <video
+          ref={ref}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          tabIndex={-1}
+          aria-hidden="true"
+        >
+          {/* #t=0.1 makes the browser (incl. iOS Safari) render a frame */}
+          <Sources v={v} hash="#t=0.1" />
+        </video>
+      )}
       <span className="zv-dur">{v.duration}</span>
     </span>
   );
@@ -150,7 +217,7 @@ function Card({
       ref={ref}
       type="button"
       className={`zv-card zs-reveal${seen ? " in" : ""}`}
-      style={{ "--d": `${(i % 3) * 90}ms` } as CSSProperties}
+      style={{ "--d": `${(i % 4) * 90}ms` } as CSSProperties}
       onClick={() => onOpen(v)}
       aria-label={`Play ${v.title} — ${v.industry} ${v.kind}`}
     >
@@ -246,7 +313,7 @@ export default function VideoPage({
   return (
     <Shell
       words={["Stories", "worth", "watching."]}
-      sub="Shot, scripted, and cut to hold attention. Tap to watch with sound."
+      sub="Shot, scripted, and cut to hold attention. Hover to preview, tap to watch with sound."
       waText="Hi Ziron Pro, I'd like a video made."
       ctaTitle="Let’s roll camera."
       ctaLabel="Chat on WhatsApp"
@@ -270,8 +337,19 @@ export default function VideoPage({
 }
 
 const CSS = `
-.zv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,230px));justify-content:center;gap:clamp(16px,2vw,28px);margin-bottom:clamp(12px,2.5vw,32px)}
-@media(max-width:540px){.zv-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+.zv-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(14px,1.8vw,28px);
+  width:100%;
+  margin:0 0 clamp(12px,2.5vw,32px);
+}
+@media(max-width:820px){
+  .zv-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+}
+@media(max-width:540px){
+  .zv-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+}
 
 .zv-card{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:12px;width:100%}
 .zv-card:focus-visible{outline:2px solid var(--purple);outline-offset:4px;border-radius:16px}

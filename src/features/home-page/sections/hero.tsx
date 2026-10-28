@@ -214,7 +214,7 @@ export default function Hero({ whatsappNumber = "971542588446" }: HeroProps) {
               transform: `translateY(${-p * 80}px)`,
             }}
           >
-            Websites, brands, video, search, leads and print.
+           Websites, branding, video, search, leads, social media management and print.
           </p>
         </div>
 
