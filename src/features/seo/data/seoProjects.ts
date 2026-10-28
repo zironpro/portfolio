@@ -1,5 +1,8 @@
+export type SeoCategory = "seo" | "geo";
+
 export type SeoProject = {
   id: string;
+  category: SeoCategory;
   industry: string;
   kind: string;
   rank: string;
@@ -13,7 +16,12 @@ export type SeoProject = {
   image: string;
 };
 
-export const SEO_PROJECTS: SeoProject[] = [
+// category is optional on input and defaults to "seo"
+type SeoProjectInput = Omit<SeoProject, "category"> & {
+  category?: SeoCategory;
+};
+
+const RAW_PROJECTS: SeoProjectInput[] = [
   {
     id: "seo-1",
     industry: "Solar & Heat Control",
@@ -294,4 +302,29 @@ export const SEO_PROJECTS: SeoProject[] = [
       "Direct WhatsApp quote inquiries from mobile searchers",
     ],
   },
+
+  /* ── GEO (AI search visibility) projects ──────────────────────────────
+     Paste real entries here. Example shape:
+
+  {
+    id: "geo-1",
+    category: "geo",
+    industry: "Solar & Heat Control",
+    kind: "AI Search Visibility",
+    rank: "Cited",
+    trafficGrowth: "+000%",
+    timeframe: "2 months",
+    keywordsRanked: 0,
+    topKeyword: "best window film company in abu dhabi",
+    image: "/seo/geo-example.png",
+    metrics: [20, 35, 52, 68, 84, 96],
+    overview: "What you did for AI-search visibility.",
+    results: ["Result one", "Result two", "Result three", "Result four"],
+  },
+  */
 ];
+
+export const SEO_PROJECTS: SeoProject[] = RAW_PROJECTS.map((p) => ({
+  category: "seo",
+  ...p,
+}));

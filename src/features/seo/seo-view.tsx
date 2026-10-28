@@ -2,7 +2,8 @@
 
 /**
  * Ziron Pro — SEO page  (route: /seo)
- * Verified Google search ranking proof cards; click for case-study breakdown.
+ * Verified Google search ranking proof cards with SEO / GEO filters;
+ * click a card for the case-study breakdown.
  */
 
 import React, { useCallback, useMemo, useState } from "react";
@@ -13,10 +14,36 @@ import Shell, {
   useModal,
   waLink,
 } from "../CategoryShell";
-import { SEO_PROJECTS, SeoProject } from "./data/seoProjects";
-
+import { SEO_PROJECTS, SeoProject, SeoCategory } from "./data/seoProjects";
 
 type Props = { whatsappNumber?: string; backHref?: string };
+
+type Filter = "all" | SeoCategory;
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "seo", label: "SEO" },
+  { id: "geo", label: "GEO" },
+];
+
+const CheckIcon: React.FC<{ size?: number }> = ({ size = 12 }) => (
+  <svg
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    aria-hidden="true"
+  >
+    <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const mediaTag = (p: SeoProject) => {
+  if (p.category === "geo") return "AI Search Visibility";
+  return p.rank.startsWith("#") ? `Google Rank ${p.rank}` : `Google ${p.rank}`;
+};
 
 const Card: React.FC<{
   p: SeoProject;
@@ -31,7 +58,7 @@ const Card: React.FC<{
       className={`zseo-card zs-reveal ${seen ? "in" : ""}`}
       style={{ ["--d" as string]: `${(i % 3) * 90}ms` }}
       onClick={() => onOpen(p)}
-      aria-label={`View ${p.topKeyword} ranking case study`}
+      aria-label={`View ${p.topKeyword} ${p.category.toUpperCase()} case study`}
     >
       <div className="zseo-card-top">
         <span className="zseo-rank">{p.rank}</span>
@@ -60,24 +87,8 @@ const Card: React.FC<{
       <div className="zseo-card-media">
         <img src={p.image} alt={p.topKeyword} loading="lazy" />
         <span className="zseo-media-tag">
-          <svg
-            viewBox="0 0 24 24"
-            width="11"
-            height="11"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            aria-hidden="true"
-          >
-            <path
-              d="M20 6L9 17l-5-5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          {p.rank.startsWith("#")
-            ? `Google Rank ${p.rank}`
-            : `Google ${p.rank}`}
+          <CheckIcon size={11} />
+          {mediaTag(p)}
         </span>
       </div>
 
@@ -98,12 +109,13 @@ const Detail: React.FC<{
   onClose: () => void;
 }> = ({ p, wa, onClose }) => {
   useModal(onClose);
+  const isGeo = p.category === "geo";
   return (
     <div
       className="zs-modal"
       role="dialog"
       aria-modal="true"
-      aria-label={`${p.topKeyword} SEO case study`}
+      aria-label={`${p.topKeyword} ${isGeo ? "GEO" : "SEO"} case study`}
       onClick={onClose}
     >
       <div
@@ -129,31 +141,20 @@ const Detail: React.FC<{
           <div className="zseo-detail-media">
             <div className="zseo-detail-bar">
               <span className="zseo-proof-badge">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="13"
-                  height="13"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20 6L9 17l-5-5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Verified Live Google Search Result
+                <CheckIcon size={13} />
+                {isGeo
+                  ? "Verified AI Search Result"
+                  : "Verified Live Google Search Result"}
               </span>
               <span className="zseo-proof-kw">
-                Target query: <b>“{p.topKeyword}”</b>
+                {isGeo ? "Target prompt:" : "Target query:"}{" "}
+                <b>“{p.topKeyword}”</b>
               </span>
             </div>
             <div className="zseo-detail-frame">
               <img
                 src={p.image}
-                alt={`Google rank proof for ${p.topKeyword}`}
+                alt={`${isGeo ? "AI search" : "Google rank"} proof for ${p.topKeyword}`}
                 className="zseo-detail-img"
               />
             </div>
@@ -161,7 +162,7 @@ const Detail: React.FC<{
 
           <div className="zs-stats">
             <div>
-              <span>Peak rank</span>
+              <span>{isGeo ? "Best position" : "Peak rank"}</span>
               <b style={{ color: "var(--purple)" }}>{p.rank}</b>
             </div>
             <div>
@@ -169,11 +170,11 @@ const Detail: React.FC<{
               <b style={{ color: "var(--purple)" }}>{p.trafficGrowth}</b>
             </div>
             <div>
-              <span>Time to rank</span>
+              <span>{isGeo ? "Time to appear" : "Time to rank"}</span>
               <b>{p.timeframe}</b>
             </div>
             <div>
-              <span>Keywords ranked</span>
+              <span>{isGeo ? "Prompts won" : "Keywords ranked"}</span>
               <b>{p.keywordsRanked}+</b>
             </div>
           </div>
@@ -216,10 +217,31 @@ export default function SeoPage({
   backHref,
 }: Props) {
   const [selected, setSelected] = useState<SeoProject | null>(null);
+  const [filter, setFilter] = useState<Filter>("all");
   const close = useCallback(() => setSelected(null), []);
   const wa = waLink(
     whatsappNumber,
     "Hi Ziron Pro, I'd like to rank on Google.",
+  );
+
+  const counts = useMemo(() => {
+    const c: Record<Filter, number> = {
+      all: SEO_PROJECTS.length,
+      seo: 0,
+      geo: 0,
+    };
+    SEO_PROJECTS.forEach((p) => {
+      c[p.category] += 1;
+    });
+    return c;
+  }, []);
+
+  const visible = useMemo(
+    () =>
+      filter === "all"
+        ? SEO_PROJECTS
+        : SEO_PROJECTS.filter((p) => p.category === filter),
+    [filter],
   );
 
   return (
@@ -235,11 +257,39 @@ export default function SeoPage({
       overlay={selected && <Detail p={selected} wa={wa} onClose={close} />}
     >
       <style>{CSS}</style>
-      <div className="zseo-grid">
-        {SEO_PROJECTS.map((p, i) => (
-          <Card key={p.id} p={p} i={i} onOpen={setSelected} />
+
+      <div
+        className="zseo-filters"
+        role="group"
+        aria-label="Filter case studies"
+      >
+        {FILTERS.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            className={`zseo-filter ${filter === f.id ? "active" : ""}`}
+            aria-pressed={filter === f.id}
+            onClick={() => setFilter(f.id)}
+          >
+            {f.label}
+            <span className="zseo-filter-count">{counts[f.id]}</span>
+          </button>
         ))}
       </div>
+
+      {visible.length ? (
+        <div className="zseo-grid">
+          {visible.map((p, i) => (
+            <Card key={p.id} p={p} i={i} onOpen={setSelected} />
+          ))}
+        </div>
+      ) : (
+        <p className="zseo-empty">
+          {filter === "geo"
+            ? "GEO case studies are coming soon."
+            : "No case studies in this category yet."}
+        </p>
+      )}
     </Shell>
   );
 }
@@ -248,6 +298,41 @@ const CSS = `
 .zseo-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.8vw,30px)}
 @media (max-width:1000px){ .zseo-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:600px){ .zseo-grid{grid-template-columns:1fr} }
+
+/* Filters */
+.zseo-filters{
+  display:flex; justify-content:center; align-items:center; gap:6px;
+  width:fit-content; max-width:100%;
+  margin:0 auto clamp(20px,2.6vw,36px);
+  padding:6px;
+  background:#F4F5F9;
+  border:1.5px solid var(--line);
+  border-radius:16px;
+}
+.zseo-filter{
+  all:unset; box-sizing:border-box; cursor:pointer;
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 20px; border-radius:11px;
+  font-weight:700; font-size:.92rem;
+  background:transparent; color:var(--black);
+  transition:background .25s, color .25s, box-shadow .25s;
+}
+.zseo-filter:hover{ background:rgba(143,44,244,.08) }
+.zseo-filter:focus-visible{ outline:2px solid var(--purple); outline-offset:2px }
+.zseo-filter.active{
+  background:var(--purple-2); color:#fff;
+  box-shadow:0 6px 14px -4px rgba(77,17,168,.45);
+}
+.zseo-filter-count{
+  font-size:.72rem; font-weight:800;
+  padding:2px 7px; border-radius:999px;
+  background:rgba(13,20,32,.08);
+}
+.zseo-filter.active .zseo-filter-count{background:rgba(255,255,255,.22)}
+@media (max-width:420px){
+  .zseo-filter{padding:8px 14px; font-size:.86rem}
+}
+.zseo-empty{opacity:.7; text-align:center; padding:40px 0}
 
 /* Light card */
 .zseo-card{
@@ -385,5 +470,6 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){
   .zseo-card{transition:none}
   .zseo-card-media img{transition:none}
+  .zseo-filter{transition:none}
 }
 `;
