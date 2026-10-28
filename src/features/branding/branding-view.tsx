@@ -302,16 +302,6 @@ export default function BrandingPage({ whatsappNumber, backHref }: Props) {
   const close = useCallback(() => setOpen(null), []);
   const openProject = useCallback((p: Project) => setOpen(p), []);
 
-  // Lock background scroll while the modal is open
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
   return (
     <Shell
       words={["Brands", "people", "remember."]}
