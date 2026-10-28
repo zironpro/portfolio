@@ -10,7 +10,6 @@ import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import Shell, {
   ArrowUpRight,
   CloseIcon,
-  Filters,
   useSeen,
   useModal,
   waLink,
@@ -89,7 +88,6 @@ const VIDEOS: Video[] = [
   },
 ];
 
-const KINDS = ["All", ...new Set(VIDEOS.map((v) => v.kind))];
 const poster = (v: Video) => `/video/posters/${v.slug}.jpg`;
 
 /** WebM first (smaller), MP4 as fallback. */
@@ -264,12 +262,8 @@ export default function VideoPage({
   whatsappNumber?: string;
   backHref?: string;
 }) {
-  const [filter, setFilter] = useState("All");
   const [open, setOpen] = useState<Video | null>(null);
   const close = useCallback(() => setOpen(null), []);
-
-  const list =
-    filter === "All" ? VIDEOS : VIDEOS.filter((v) => v.kind === filter);
 
   return (
     <Shell
@@ -288,16 +282,9 @@ export default function VideoPage({
       }
     >
       <style>{CSS}</style>
-      <Filters
-        items={KINDS}
-        value={filter}
-        onChange={setFilter}
-        label="Filter by type"
-      />
-
       <div className="zv-grid">
-        {list.map((v, i) => (
-          <Card key={filter + v.id} v={v} i={i} onOpen={setOpen} />
+        {VIDEOS.map((v, i) => (
+          <Card key={v.id} v={v} i={i} onOpen={setOpen} />
         ))}
       </div>
     </Shell>

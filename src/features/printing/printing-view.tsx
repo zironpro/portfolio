@@ -9,7 +9,6 @@ import React, { useCallback, useMemo, useState } from "react";
 import Shell, {
   ArrowUpRight,
   CloseIcon,
-  Filters,
   useSeen,
   useModal,
   waLink,
@@ -258,23 +257,7 @@ export default function PrintingPage({
   whatsappNumber = "971542588446",
   backHref,
 }: Props) {
-  const [filter, setFilter] = useState("All");
   const [selected, setSelected] = useState<PrintProject | null>(null);
-
-  const industries = useMemo(
-    () => [
-      "All",
-      ...Array.from(new Set(PRINT_PROJECTS.map((p) => p.industry))),
-    ],
-    [],
-  );
-  const shown = useMemo(
-    () =>
-      filter === "All"
-        ? PRINT_PROJECTS
-        : PRINT_PROJECTS.filter((p) => p.industry === filter),
-    [filter],
-  );
   const close = useCallback(() => setSelected(null), []);
   const wa = waLink(
     whatsappNumber,
@@ -294,15 +277,9 @@ export default function PrintingPage({
       overlay={selected && <Detail p={selected} wa={wa} onClose={close} />}
     >
       <style>{CSS}</style>
-      <Filters
-        items={industries}
-        value={filter}
-        onChange={setFilter}
-        label="Filter by industry"
-      />
       <div className="zprint-grid">
-        {shown.map((p, i) => (
-          <Card key={filter + p.id} p={p} i={i} onOpen={setSelected} />
+        {PRINT_PROJECTS.map((p, i) => (
+          <Card key={p.id} p={p} i={i} onOpen={setSelected} />
         ))}
       </div>
     </Shell>

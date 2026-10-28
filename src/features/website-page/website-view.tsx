@@ -16,7 +16,6 @@ import React, {
 import Shell, {
   ArrowUpRight,
   CloseIcon,
-  Filters,
   useSeen,
   useModal,
 } from "../CategoryShell";
@@ -65,29 +64,6 @@ const PROJECTS: Project[] = [
     image: "/websites/biznorx-realty.jpg",
   },
   {
-    id: "w2",
-    title: "Vila Ventures",
-    industry: "Real Estate",
-    kind: "Luxury Estates & Villas",
-    description:
-      "An editorial-style digital experience showcasing luxury vacation villas and premium estate investments through high-resolution imagery and direct inquiry options.",
-    deliverables: [
-      "Luxury UI/UX",
-      "Brochure Downloads",
-      "Interactive Map",
-      "WhatsApp Direct Booking",
-    ],
-    metrics: [
-      { label: "Performance", value: "99/100" },
-      { label: "Bounce Rate", value: "-28%" },
-      { label: "Bookings", value: "+3.2x" },
-    ],
-    url: "https://vilaventures.ae/",
-    displayUrl: "vilaventures.ae",
-    tone: P2,
-    image: "/websites/vila-ventures.jpg",
-  },
-  {
     id: "w3",
     title: "Delta Equipment",
     industry: "Heavy Equipment",
@@ -109,6 +85,29 @@ const PROJECTS: Project[] = [
     displayUrl: "deltaequip.net",
     tone: K,
     image: "/websites/delta-equipment.jpg",
+  },
+  {
+    id: "w2",
+    title: "Vila Ventures",
+    industry: "Real Estate",
+    kind: "Luxury Estates & Villas",
+    description:
+      "An editorial-style digital experience showcasing luxury vacation villas and premium estate investments through high-resolution imagery and direct inquiry options.",
+    deliverables: [
+      "Luxury UI/UX",
+      "Brochure Downloads",
+      "Interactive Map",
+      "WhatsApp Direct Booking",
+    ],
+    metrics: [
+      { label: "Performance", value: "99/100" },
+      { label: "Bounce Rate", value: "-28%" },
+      { label: "Bookings", value: "+3.2x" },
+    ],
+    url: "https://vilaventures.ae/",
+    displayUrl: "vilaventures.ae",
+    tone: P2,
+    image: "/websites/vila-ventures.jpg",
   },
   {
     id: "w4",
@@ -177,7 +176,7 @@ const PROJECTS: Project[] = [
     url: "https://maxlineglobal.com/",
     displayUrl: "maxlineglobal.com",
     tone: K,
-    image: "/websites/maxline.jpg",
+    image: "/websites/maxline.png",
   },
   {
     id: "w7",
@@ -203,26 +202,26 @@ const PROJECTS: Project[] = [
   },
   {
     id: "w8",
-    title: "Hot Wheel Motors",
-    industry: "Automotive",
-    kind: "Car Showroom",
+    title: "Al Rewaya Book Store",
+    industry: "E-commerce & Publishing",
+    kind: "Online Bookstore",
     description:
-      "A premium automotive website designed to showcase vehicles, highlight showroom offerings, and deliver an engaging browsing experience for prospective buyers.",
+      "A modern e-commerce platform designed to showcase a diverse collection of books, from Islamic literature and children's books to fiction and personal development. The website delivers a seamless browsing and shopping experience with curated collections, bestsellers, and an intuitive product discovery journey.",
     deliverables: [
-      "Vehicle Showcase",
-      "Automotive UI/UX",
-      "Showroom Presentation",
+      "E-commerce Website",
+      "Book Catalogue & Categories",
+      "Product Discovery & Shopping",
       "Responsive Design",
     ],
     metrics: [
-      { label: "Industry", value: "Automotive" },
-      { label: "Experience", value: "Interactive" },
-      { label: "Layout", value: "Responsive" },
+      { label: "Industry", value: "Book Retail" },
+      { label: "Platform", value: "E-commerce" },
+      { label: "Experience", value: "Responsive" },
     ],
-    url: "https://hotwheelmotors.com/",
-    displayUrl: "hotwheelmotors.com",
+    url: "https://www.rewayabooks.com/",
+    displayUrl: "rewayabooks.com",
     tone: P2,
-    image: "/websites/hot-wheels.png",
+    image: "/websites/al-rewaya.png",
   },
   {
     id: "w9",
@@ -431,19 +430,7 @@ const DetailsModal: React.FC<{ p: Project; onClose: () => void }> = ({
 };
 
 export default function WebsitesPage({ whatsappNumber, backHref }: Props) {
-  const [filter, setFilter] = useState("All");
   const [open, setOpen] = useState<Project | null>(null);
-  const industries = useMemo(
-    () => ["All", ...Array.from(new Set(PROJECTS.map((p) => p.industry)))],
-    [],
-  );
-  const shown = useMemo(
-    () =>
-      filter === "All"
-        ? PROJECTS
-        : PROJECTS.filter((p) => p.industry === filter),
-    [filter],
-  );
   const close = useCallback(() => setOpen(null), []);
 
   return (
@@ -459,15 +446,9 @@ export default function WebsitesPage({ whatsappNumber, backHref }: Props) {
       overlay={open && <DetailsModal p={open} onClose={close} />}
     >
       <style>{CSS}</style>
-      <Filters
-        items={industries}
-        value={filter}
-        onChange={setFilter}
-        label="Filter by industry"
-      />
       <div className="zw-grid">
-        {shown.map((p, i) => (
-          <Card key={filter + p.id} p={p} i={i} onOpen={setOpen} />
+        {PROJECTS.map((p, i) => (
+          <Card key={p.id} p={p} i={i} onOpen={setOpen} />
         ))}
       </div>
     </Shell>

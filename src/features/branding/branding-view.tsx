@@ -17,7 +17,6 @@ import React, {
 import Shell, {
   ArrowUpRight,
   CloseIcon,
-  Filters,
   useSeen,
   useModal,
   waLink,
@@ -404,20 +403,7 @@ const BrandModal: React.FC<{
 };
 
 export default function BrandingPage({ whatsappNumber, backHref }: Props) {
-  const [filter, setFilter] = useState("All");
   const [open, setOpen] = useState<Project | null>(null);
-
-  const industries = useMemo(
-    () => ["All", ...Array.from(new Set(PROJECTS.map((p) => p.industry)))],
-    [],
-  );
-  const shown = useMemo(
-    () =>
-      filter === "All"
-        ? PROJECTS
-        : PROJECTS.filter((p) => p.industry === filter),
-    [filter],
-  );
   const close = useCallback(() => setOpen(null), []);
   const openProject = useCallback((p: Project) => setOpen(p), []);
 
@@ -442,15 +428,9 @@ export default function BrandingPage({ whatsappNumber, backHref }: Props) {
       }
     >
       <style>{CSS}</style>
-      <Filters
-        items={industries}
-        value={filter}
-        onChange={setFilter}
-        label="Filter by industry"
-      />
       <div className="zb-grid">
-        {shown.map((p, i) => (
-          <Card key={filter + p.id} p={p} i={i} onOpen={openProject} />
+        {PROJECTS.map((p, i) => (
+          <Card key={p.id} p={p} i={i} onOpen={openProject} />
         ))}
       </div>
     </Shell>

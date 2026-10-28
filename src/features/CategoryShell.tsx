@@ -87,28 +87,6 @@ export function useModal(
   }, [onClose, onKey]);
 }
 
-export const Filters: React.FC<{
-  items: string[];
-  value: string;
-  onChange: (v: string) => void;
-  label: string;
-}> = ({ items, value, onChange, label }) => (
-  <div className="zs-filters" role="tablist" aria-label={label}>
-    {items.map((f) => (
-      <button
-        key={f}
-        type="button"
-        role="tab"
-        aria-selected={value === f}
-        className={value === f ? "on" : ""}
-        onClick={() => onChange(f)}
-      >
-        {f}
-      </button>
-    ))}
-  </div>
-);
-
 /* ---------- shell ---------- */
 type ShellProps = {
   words: string[];
@@ -269,11 +247,6 @@ export const SHELL_CSS = `
 
 /* body */
 .zs-body{padding:clamp(24px,3.5vw,48px) clamp(16px,2.8vw,54px) clamp(40px,5vw,72px)}
-.zs-filters{display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; padding-bottom:6px; margin-bottom:clamp(16px,2.2vw,28px)}
-.zs-filters::-webkit-scrollbar{display:none}
-.zs-filters button{flex:none; border:1.5px solid var(--black); background:var(--white); color:var(--black); font-weight:600; font-size:.95rem; padding:9px 18px; border-radius:999px; cursor:pointer; transition:background .2s, color .2s, border-color .2s}
-.zs-filters button:hover{border-color:var(--purple); color:var(--purple)}
-.zs-filters button.on{background:var(--black); color:var(--white); border-color:var(--black)}
 
 /* reveal (higher specificity so card resets like "all:unset" can't cancel it) */
 .zs-page .zs-reveal{opacity:0; transform:translateY(40px); transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); transition-delay:var(--d,0ms)}
