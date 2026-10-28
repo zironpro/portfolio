@@ -202,6 +202,29 @@ const PROJECTS: Project[] = [
     tone: P2,
     image: "/websites/qordx.jpg",
   },
+  {
+    id: "w8",
+    title: "Qordx",
+    industry: "Technology",
+    kind: "Digital Platform & SaaS",
+    description:
+      "Sleek SaaS product landing page with dark-mode accents, interactive feature highlights, API documentation preview, and friction-free user onboarding.",
+    deliverables: [
+      "SaaS Landing Page",
+      "Interactive Features",
+      "Pricing Matrix",
+      "User Onboarding",
+    ],
+    metrics: [
+      { label: "Signup Rate", value: "+38%" },
+      { label: "Page Load", value: "0.8s" },
+      { label: "Product Demos", value: "2.4x" },
+    ],
+    url: "https://qordx.com",
+    displayUrl: "qordx.com",
+    tone: P2,
+    image: "/websites/hot-wheels.png",
+  },
 ];
 
 type Props = { whatsappNumber?: string; backHref?: string };

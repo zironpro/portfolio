@@ -467,22 +467,24 @@ const CSS = `
 @media (max-width:1000px){ .zseo-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:600px){ .zseo-grid{grid-template-columns:1fr} }
 
+/* Light card */
 .zseo-card{
-  all:unset; box-sizing:border-box; cursor:pointer; background:var(--black); color:#fff;
+  all:unset; box-sizing:border-box; cursor:pointer;
+  background:#fff; color:var(--black);
   border-radius:16px; padding:clamp(16px,2vw,24px); display:flex; flex-direction:column;
-  justify-content:space-between; gap:16px; border:1.5px solid transparent;
+  justify-content:space-between; gap:16px; border:1.5px solid var(--line);
   transition:transform .4s cubic-bezier(.2,.8,.2,1), background .3s, border-color .3s, box-shadow .4s;
 }
 .zseo-card:hover, .zseo-card:focus-visible{
   transform:translateY(-6px);
-  background:color-mix(in srgb, var(--purple) 30%, var(--black));
+  background:color-mix(in srgb, var(--purple) 6%, #fff);
   border-color:rgba(143,44,244,.4);
-  box-shadow:0 18px 36px -10px rgba(77,17,168,.3);
+  box-shadow:0 18px 36px -10px rgba(77,17,168,.2);
 }
 
 .zseo-card-top{display:flex; justify-content:space-between; align-items:center}
 .zseo-rank{background:var(--purple-2); color:#fff; font-weight:800; font-size:1.15rem; padding:4px 12px; border-radius:999px}
-.zseo-growth{font-weight:800; font-size:1.5rem; letter-spacing:-.02em; color:#fff}
+.zseo-growth{font-weight:800; font-size:1.5rem; letter-spacing:-.02em; color:var(--purple)}
 
 .zseo-card-media{
   position:relative;
@@ -490,8 +492,8 @@ const CSS = `
   aspect-ratio:16/9;
   border-radius:10px;
   overflow:hidden;
-  background:#141724;
-  border:1px solid rgba(255,255,255,.14);
+  background:#F4F5F9;
+  border:1px solid var(--line);
 }
 .zseo-card-media img{
   width:100%;
@@ -511,14 +513,14 @@ const CSS = `
   display:inline-flex;
   align-items:center;
   gap:4px;
-  background:rgba(13,20,32,.85);
+  background:rgba(255,255,255,.92);
   backdrop-filter:blur(6px);
-  color:#fff;
+  color:var(--black);
   font-size:.7rem;
   font-weight:700;
   padding:4px 9px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.18);
+  border:1px solid var(--line);
 }
 
 .zseo-info{display:flex; flex-direction:column; gap:6px}
