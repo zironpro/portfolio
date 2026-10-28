@@ -46,7 +46,11 @@ const Card: React.FC<{
       </div>
       <div className="zlead-meta">
         <div className="zlead-cpl">
-          Average CPL: <b>{p.cpl}</b>
+          {p.cpl ? (
+            <>Average CPL: <b>{p.cpl}</b></>
+          ) : (
+            <>Tracked: <b>{p.period}</b></>
+          )}
         </div>
         <div className="zlead-cap">
           <span className="zlead-ind">{p.company}</span>
@@ -75,7 +79,10 @@ const Detail: React.FC<{ p: LeadProject; wa: string; onClose: () => void }> = ({
         <div className="zs-sheet-top">
           <div>
             <b className="zs-sheet-ind">{p.company}</b>
-            <span className="zs-sheet-kind">{p.kind}</span>
+            <span className="zs-sheet-kind">
+              {p.kind}
+              {p.period ? ` · ${p.period}` : ""}
+            </span>
           </div>
           <button
             type="button"
@@ -89,8 +96,8 @@ const Detail: React.FC<{ p: LeadProject; wa: string; onClose: () => void }> = ({
         <div className="zs-sheet-body">
           <div className="zs-stats">
             <div>
-              <span>Cost per lead</span>
-              <b style={{ color: "var(--purple)" }}>{p.cpl}</b>
+              <span>{p.cpl ? "Cost per lead" : "Data source"}</span>
+              <b style={{ color: "var(--purple)" }}>{p.cpl ?? p.source}</b>
             </div>
             <div>
               <span>Verified enquiries</span>

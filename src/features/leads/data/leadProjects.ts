@@ -4,6 +4,7 @@ export type LeadProject = {
   source: string;
   period: string;
   kind: string;
+  cpl?: string;
   leadsDelivered: string;
   roas: string;
   channels: string[];
