@@ -21,6 +21,7 @@ type SeoProject = {
   kind: string;
   rank: string;
   trafficGrowth: string;
+  timeframe: string;
   keywordsRanked: number;
   topKeyword: string;
   metrics: number[];
@@ -36,6 +37,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Thermal Insulation Film",
     rank: "#1",
     trafficGrowth: "+320%",
+    timeframe: "3 months",
     keywordsRanked: 148,
     topKeyword: "tint insulation in abu dhabi",
     image: "/seo/tint-insulation-in-abudhabi.png",
@@ -55,6 +57,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Heat Control Window Film",
     rank: "#1",
     trafficGrowth: "+290%",
+    timeframe: "2 months",
     keywordsRanked: 115,
     topKeyword: "best heat control window film abudhabi",
     image: "/seo/best-heat-control-window-film-abudhabi.png",
@@ -74,6 +77,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "UV & Heat Blocking Film",
     rank: "#1",
     trafficGrowth: "+345%",
+    timeframe: "3 months",
     keywordsRanked: 132,
     topKeyword: "heat blocking window film abudhabi",
     image: "/seo/heat-blocking-window-film-abudhabi.png",
@@ -93,6 +97,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Solar Shield Film",
     rank: "#1",
     trafficGrowth: "+275%",
+    timeframe: "1 month",
     keywordsRanked: 96,
     topKeyword: "solar shield window film abudhabi",
     image: "/seo/solar-sheild-window-fim-abudhabi.png",
@@ -112,6 +117,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Commercial Security Glazing",
     rank: "#1",
     trafficGrowth: "+410%",
+    timeframe: "4 months",
     keywordsRanked: 164,
     topKeyword: "security window film abudhabi",
     image: "/seo/security-window-film-abudhabi.png",
@@ -131,6 +137,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Glass Protection & Security",
     rank: "#1",
     trafficGrowth: "+280%",
+    timeframe: "3 months",
     keywordsRanked: 128,
     topKeyword: "security film for glass abudhabi",
     image: "/seo/security-film-for-glass-abudhabi.png",
@@ -150,6 +157,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Anti-Shatter Safety Film",
     rank: "#1",
     trafficGrowth: "+330%",
+    timeframe: "2 months",
     keywordsRanked: 142,
     topKeyword: "safety film abudhabi",
     image: "/seo/safety-film-abudhabi.png",
@@ -169,6 +177,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Ballistic & Blast Mitigation",
     rank: "#1",
     trafficGrowth: "+460%",
+    timeframe: "4 months",
     keywordsRanked: 88,
     topKeyword: "bullet proof window film abudhabi",
     image: "/seo/bullet-proof-window-film-abudhabi.png",
@@ -188,6 +197,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Frosted & Decorative Film",
     rank: "#1",
     trafficGrowth: "+360%",
+    timeframe: "3 months",
     keywordsRanked: 156,
     topKeyword: "decorative window film abudhabi",
     image: "/seo/decorative-window-film-abudhabi.png",
@@ -207,6 +217,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Polycarbonate & Blister-Free Film",
     rank: "#1",
     trafficGrowth: "+240%",
+    timeframe: "1 month",
     keywordsRanked: 74,
     topKeyword: "blister free window film",
     image: "/seo/blister-free-window-film.png",
@@ -226,6 +237,7 @@ const SEO_PROJECTS: SeoProject[] = [
     kind: "Turnkey Window Film Services",
     rank: "#1",
     trafficGrowth: "+380%",
+    timeframe: "4 months",
     keywordsRanked: 185,
     topKeyword: "window film solutions abudhabi",
     image: "/seo/window-film-solutions-abudhabi.png",
@@ -260,6 +272,25 @@ const Card: React.FC<{
     >
       <div className="zseo-card-top">
         <span className="zseo-rank">{p.rank}</span>
+        <span className="zseo-time">
+          <svg
+            viewBox="0 0 24 24"
+            width="12"
+            height="12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path
+              d="M12 7v5l3 2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          {p.timeframe}
+        </span>
         <span className="zseo-growth">{p.trafficGrowth}</span>
       </div>
 
@@ -373,6 +404,10 @@ const Detail: React.FC<{
               <b style={{ color: "var(--purple)" }}>{p.trafficGrowth}</b>
             </div>
             <div>
+              <span>Time to rank</span>
+              <b>{p.timeframe}</b>
+            </div>
+            <div>
               <span>Keywords ranked</span>
               <b>{p.keywordsRanked}+</b>
             </div>
@@ -482,9 +517,21 @@ const CSS = `
   box-shadow:0 18px 36px -10px rgba(77,17,168,.2);
 }
 
-.zseo-card-top{display:flex; justify-content:space-between; align-items:center}
+.zseo-card-top{display:flex; justify-content:space-between; align-items:center; gap:8px}
 .zseo-rank{background:var(--purple-2); color:#fff; font-weight:800; font-size:1.15rem; padding:4px 12px; border-radius:999px}
 .zseo-growth{font-weight:800; font-size:1.5rem; letter-spacing:-.02em; color:var(--purple)}
+
+/* Time-to-rank pill */
+.zseo-time{
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.78rem; font-weight:700;
+  color:var(--black);
+  background:#F4F5F9;
+  border:1px solid var(--line);
+  padding:4px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
 
 .zseo-card-media{
   position:relative;
@@ -532,6 +579,11 @@ const CSS = `
 /* Modal details */
 .zseo-modal-sheet{
   width:min(840px, 96vw) !important;
+}
+/* 4 stats in the modal instead of 3 */
+.zseo-modal-sheet .zs-stats{grid-template-columns:repeat(4,1fr)}
+@media (max-width:600px){
+  .zseo-modal-sheet .zs-stats{grid-template-columns:repeat(2,1fr)}
 }
 .zseo-detail-media{
   display:flex;
