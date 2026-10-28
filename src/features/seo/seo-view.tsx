@@ -250,6 +250,66 @@ const SEO_PROJECTS: SeoProject[] = [
       "Dominant Google Business profile with 5-star review integration",
     ],
   },
+  {
+    id: "seo-12",
+    industry: "Commercial Solutions",
+    kind: "Architectural Window Film",
+    rank: "#2",
+    trafficGrowth: "+350%",
+    timeframe: "3 months",
+    keywordsRanked: 160,
+    topKeyword: "Window Film Solutions in Abu Dhabi",
+    image: "/seo/window-film.png",
+    metrics: [25, 45, 62, 78, 92, 98],
+    overview:
+      "High-competition commercial keyword strategy securing Page 1 dominance for comprehensive architectural and residential window film solutions in Abu Dhabi.",
+    results: [
+      "Rank #2 Google search placement for 'Window Film Solutions in Abu Dhabi'",
+      "Outranked established regional and international film suppliers",
+      "+350% qualified traffic to dedicated window tinting service landing page",
+      "Direct high-ticket commercial inquiries and WhatsApp quotation requests",
+    ],
+  },
+  {
+    id: "seo-13",
+    industry: "Solar & Heat Control",
+    kind: "Architectural Cooling Film",
+    rank: "Top 10",
+    trafficGrowth: "+260%",
+    timeframe: "2 months",
+    keywordsRanked: 110,
+    topKeyword: "cooling film for windows abu dhabi",
+    image: "/seo/cooling-film.png",
+    metrics: [18, 32, 48, 64, 80, 92],
+    overview:
+      "High-intent search optimization capturing commercial property managers and villa owners seeking window cooling films for energy conservation and thermal heat rejection.",
+    results: [
+      "Top 10 Google search ranking for 'cooling film for windows abu dhabi'",
+      "Targeted energy-saving and thermal reduction keyword clusters",
+      "+260% increase in seasonal cooling film quotes",
+      "Decreased acquisition cost by ranking organically against paid competitors",
+    ],
+  },
+  {
+    id: "seo-14",
+    industry: "Solar & Heat Control",
+    kind: "Sun Shield Window Tinting",
+    rank: "Top 20",
+    trafficGrowth: "+210%",
+    timeframe: "1 month",
+    keywordsRanked: 85,
+    topKeyword: "sun shield window tinting abu dhabi",
+    image: "/seo/sun-sheild.png",
+    metrics: [14, 26, 42, 58, 74, 88],
+    overview:
+      "Targeting high-volume residential and commercial solar tinting keywords, establishing organic footprints for sun shield and glass insulation queries across Abu Dhabi.",
+    results: [
+      "Top 20 organic position on Google for 'sun shield window tinting abu dhabi'",
+      "Expanding visibility across luxury villa communities and residential developments",
+      "+210% growth in organic impressions within first 30 days",
+      "Direct WhatsApp quote inquiries from mobile searchers",
+    ],
+  },
 ];
 
 type Props = { whatsappNumber?: string; backHref?: string };
@@ -311,7 +371,9 @@ const Card: React.FC<{
               strokeLinejoin="round"
             />
           </svg>
-          Google Rank #1
+          {p.rank.startsWith("#")
+            ? `Google Rank ${p.rank}`
+            : `Google ${p.rank}`}
         </span>
       </div>
 
@@ -459,7 +521,7 @@ export default function SeoPage({
   return (
     <Shell
       words={["Rankings", "you", "can", "measure."]}
-      sub="Real Google Search #1 rankings and verified organic growth."
+      sub="Real Google Search top rankings and verified organic growth."
       waText="Hi Ziron Pro, I'd like to rank on Google."
       ctaTitle="Ready for Page #1?"
       ctaLabel="Audit your site on WhatsApp"
@@ -499,7 +561,7 @@ const CSS = `
 }
 
 .zseo-card-top{display:flex; justify-content:space-between; align-items:center; gap:8px}
-.zseo-rank{background:var(--purple-2); color:#fff; font-weight:800; font-size:1.15rem; padding:4px 12px; border-radius:999px}
+.zseo-rank{background:var(--purple-2); color:#fff; font-weight:800; font-size:1.05rem; padding:4px 12px; border-radius:999px; white-space:nowrap}
 .zseo-growth{font-weight:800; font-size:1.5rem; letter-spacing:-.02em; color:var(--purple)}
 
 /* Time-to-rank pill */

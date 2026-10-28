@@ -2,11 +2,11 @@
 
 /**
  * Ziron Pro — Video page (route: /video)
- * Vertical 9:16 reels. Cards show a poster, preview silently on hover (desktop)
- * or while in view (touch), and open a modal player with sound on click.
+ * Vertical 9:16 reels. Cards show the first frame and play silently on hover.
+ * Click opens a modal player with sound.
  */
 
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useRef, useState, type CSSProperties } from "react";
 import Shell, {
   ArrowUpRight,
   CloseIcon,
@@ -21,7 +21,7 @@ type Video = {
   industry: string;
   kind: "Ad film" | "Reel" | "Product";
   duration: string;
-  slug: string; // files: /video/{slug}.mp4|.webm, /video/posters/{slug}.jpg
+  slug: string; // files: /video/{slug}.mp4|.webm
   description: string;
 };
 
@@ -32,7 +32,7 @@ const VIDEOS: Video[] = [
     industry: "Real Estate",
     kind: "Ad film",
     duration: "0:17",
-    slug: "biznorx-launch",
+    slug: "roots",
     description:
       "Cinematic launch teaser for Biznorx Realty highlighting landmark architecture, urban skyline presence, and premium property development.",
   },
@@ -88,8 +88,6 @@ const VIDEOS: Video[] = [
   },
 ];
 
-const poster = (v: Video) => `/video/posters/${v.slug}.jpg`;
-
 /** WebM first (smaller), MP4 as fallback. */
 const Sources = ({ v }: { v: Video }) => (
   <>
@@ -98,60 +96,40 @@ const Sources = ({ v }: { v: Video }) => (
   </>
 );
 
-const PlayIcon = () => (
-  <svg viewBox="0 0 24 24" width={26} height={26} aria-hidden="true">
-    <path d="M8 5v14l11-7z" fill="currentColor" />
-  </svg>
-);
-
 /* ---------- Card thumbnail ----------
- * The <video> is only mounted while the card is active (hover / focus / in view),
- * so nothing is downloaded until a preview is actually needed. */
+ * Shows the video's first frame (paused). Hover plays it silently,
+ * mouse-leave pauses and returns to the first frame. Only metadata is
+ * loaded up front. Click opens the player. */
 function Thumb({ v }: { v: Video }) {
-  const [wrap, setWrap] = useState<HTMLSpanElement | null>(null);
-  const [active, setActive] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const ref = useRef<HTMLVideoElement>(null);
 
-  const on = useCallback(() => setActive(true), []);
-  const off = useCallback(() => {
-    setActive(false);
-    setPlaying(false);
-  }, []);
+  const play = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;
+    el.play().catch(() => {});
+  };
 
-  // Touch devices have no hover: preview while the card is mostly on screen.
-  useEffect(() => {
-    if (!wrap || !window.matchMedia("(hover: none)").matches) return;
-    const io = new IntersectionObserver(
-      ([e]) => (e.isIntersecting ? on() : off()),
-      { threshold: 0.6 },
-    );
-    io.observe(wrap);
-    return () => io.disconnect();
-  }, [wrap, on, off]);
+  const stop = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.pause();
+    el.currentTime = 0.1;
+  };
 
   return (
     <span
-      ref={setWrap}
-      className={`zv-media${playing ? " is-playing" : ""}`}
-      onMouseEnter={on}
-      onMouseLeave={off}
+      className="zv-media"
+      onMouseEnter={play}
+      onMouseLeave={stop}
+      onFocus={play}
+      onBlur={stop}
     >
-      <img src={poster(v)} alt="" loading="lazy" decoding="async" />
-      {active && (
-        <video
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="metadata"
-          onPlaying={() => setPlaying(true)}
-        >
-          <Sources v={v} />
-        </video>
-      )}
-      <span className="zv-play" aria-hidden="true">
-        <PlayIcon />
-      </span>
+      <video ref={ref} muted loop playsInline preload="metadata" tabIndex={-1}>
+        {/* #t=0.1 makes iOS Safari render a frame */}
+        <source src={`/video/${v.slug}.webm#t=0.1`} type="video/webm" />
+        <source src={`/video/${v.slug}.mp4#t=0.1`} type="video/mp4" />
+      </video>
       <span className="zv-dur">{v.duration}</span>
     </span>
   );
@@ -241,7 +219,7 @@ function Player({
         </div>
 
         <div className="zv-player">
-          <video poster={poster(v)} controls autoPlay playsInline>
+          <video controls autoPlay playsInline>
             <Sources v={v} />
           </video>
         </div>
@@ -268,7 +246,7 @@ export default function VideoPage({
   return (
     <Shell
       words={["Stories", "worth", "watching."]}
-      sub="Shot, scripted, and cut to hold attention. Hover to preview, tap to watch."
+      sub="Shot, scripted, and cut to hold attention. Tap to watch with sound."
       waText="Hi Ziron Pro, I'd like a video made."
       ctaTitle="Let’s roll camera."
       ctaLabel="Chat on WhatsApp"
@@ -300,13 +278,7 @@ const CSS = `
 
 .zv-media{position:relative;display:block;width:100%;aspect-ratio:9/16;overflow:hidden;background:var(--black);border-radius:14px;border:1.5px solid var(--line);box-shadow:0 4px 14px rgba(13,20,32,.05);transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .4s}
 .zv-card:hover .zv-media,.zv-card:focus-visible .zv-media{transform:translateY(-6px);border-color:var(--purple);box-shadow:0 18px 36px -8px rgba(77,17,168,.25)}
-.zv-media img,.zv-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.zv-media video{z-index:1;opacity:0;transition:opacity .35s}
-.zv-media.is-playing video{opacity:1}
-
-.zv-play{position:absolute;left:50%;top:50%;z-index:2;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--black);display:grid;place-items:center;padding-left:3px;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .2s,color .2s,opacity .3s}
-.zv-card:hover .zv-play{transform:scale(1.12);background:var(--purple);color:#fff}
-.zv-media.is-playing .zv-play{opacity:0;transform:scale(.8);pointer-events:none}
+.zv-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 
 .zv-dur{position:absolute;right:10px;bottom:10px;z-index:2;background:rgba(13,20,32,.85);color:#fff;font-weight:700;font-size:.78rem;padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.15);letter-spacing:.02em}
 
@@ -337,7 +309,7 @@ const CSS = `
 .zv-modal-desc{margin:0;font-size:.84rem;line-height:1.5;color:rgba(255,255,255,.8)}
 
 @media(prefers-reduced-motion:reduce){
-  .zv-media,.zv-media video,.zv-play,.zv-modal-wa{transition:none}
+  .zv-media,.zv-modal-wa{transition:none}
   .zv-modal,.zv-modal-sheet{animation:none}
 }
 `;

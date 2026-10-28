@@ -55,25 +55,6 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "b2",
-    title: "Hot Wheel Motors",
-    industry: "Automotive",
-    kind: "Automotive Brand Identity & Applications",
-    strip: "/branding/previews/hot-wheel-strip.jpg",
-    pdf: "/branding/hot-wheel.pdf",
-    pages: 40,
-    description:
-      "A bold automotive identity designed to communicate energy, movement, and reliability. The brand system extends across vehicle graphics, promotional materials, staff uniforms, certificates, and supporting brand assets to create a consistent visual presence across physical and digital touchpoints.",
-    deliverables: [
-      "Custom Logo & Visual Identity",
-      "Vehicle Graphics & Fleet Branding",
-      "Promotional Materials & Badges",
-      "Staff Uniforms & Apparel Standards",
-      "Certificates & Corporate Stationery",
-      "Complete 40-Page Brand Guidelines",
-    ],
-  },
-  {
     id: "b3",
     title: "Sphere IT Solutions",
     industry: "Technology",
