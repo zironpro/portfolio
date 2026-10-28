@@ -136,7 +136,7 @@ export default function CategoryShell({
 
         <nav className="zs-nav">
           <a className="zs-logo" href={backHref} aria-label="Ziron Pro home">
-            <img src="/logo/logo-white.png" alt="Ziron Pro" className="zs-logo-img" />
+            <img src="/logo/white-logo.png" alt="Ziron Pro" className="zs-logo-img" />
           </a>
           <a className="zs-wa" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp us</a>
         </nav>
