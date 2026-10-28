@@ -81,7 +81,7 @@ const Card: React.FC<{
           </svg>
           {p.timeframe}
         </span>
-        <span className="zseo-growth">{p.trafficGrowth}</span>
+        {/* <span className="zseo-growth">{p.trafficGrowth}</span> */}
       </div>
 
       <div className="zseo-card-media">
@@ -165,10 +165,10 @@ const Detail: React.FC<{
               <span>{isGeo ? "Best position" : "Peak rank"}</span>
               <b style={{ color: "var(--purple)" }}>{p.rank}</b>
             </div>
-            <div>
+            {/* <div>
               <span>Traffic growth</span>
               <b style={{ color: "var(--purple)" }}>{p.trafficGrowth}</b>
-            </div>
+            </div> */}
             <div>
               <span>{isGeo ? "Time to appear" : "Time to rank"}</span>
               <b>{p.timeframe}</b>

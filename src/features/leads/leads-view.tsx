@@ -3,7 +3,7 @@
 /**
  * Ziron Pro — Lead Generation page  (route: /leads)
  * Conversion cards (CPL, leads, ROAS); click for the funnel and channel breakdown.
- * The figures below are sample content: replace with your real results.
+ * Figures come from real client GA4 data (see data/leadProjects.ts).
  */
 
 import React, { useCallback, useMemo, useState } from "react";
@@ -33,7 +33,7 @@ const Card: React.FC<{
       className={`zlead-card zs-reveal ${seen ? "in" : ""}`}
       style={{ ["--d" as string]: `${(i % 3) * 90}ms` }}
       onClick={() => onOpen(p)}
-      aria-label={`View ${p.industry} lead generation case study`}
+      aria-label={`View ${p.company} lead generation case study`}
     >
       <div className="zlead-top">
         <span className="zlead-roas">{p.roas} ROAS</span>
@@ -49,7 +49,7 @@ const Card: React.FC<{
           Average CPL: <b>{p.cpl}</b>
         </div>
         <div className="zlead-cap">
-          <span className="zlead-ind">{p.industry}</span>
+          <span className="zlead-ind">{p.company}</span>
           <span className="zlead-kind">{p.kind}</span>
         </div>
       </div>
@@ -68,13 +68,13 @@ const Detail: React.FC<{ p: LeadProject; wa: string; onClose: () => void }> = ({
       className="zs-modal"
       role="dialog"
       aria-modal="true"
-      aria-label={`${p.industry} lead generation case study`}
+      aria-label={`${p.company} lead generation case study`}
       onClick={onClose}
     >
       <div className="zs-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="zs-sheet-top">
           <div>
-            <b className="zs-sheet-ind">{p.industry}</b>
+            <b className="zs-sheet-ind">{p.company}</b>
             <span className="zs-sheet-kind">{p.kind}</span>
           </div>
           <button
