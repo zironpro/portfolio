@@ -2,11 +2,11 @@
 
 /**
  * Ziron Pro — Lead Generation page  (route: /leads)
- * Conversion cards (CPL, leads, ROAS); click for the funnel and channel breakdown.
- * Figures come from real client GA4 data (see data/leadProjects.ts).
+ * Case cards show the real Ads Manager screenshot; click for the full image,
+ * breakdown and channels. Images live in /public/leads (see data/leadProjects.ts).
  */
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Shell, {
   ArrowUpRight,
   CloseIcon,
@@ -15,8 +15,6 @@ import Shell, {
   waLink,
 } from "../CategoryShell";
 import { LEAD_PROJECTS, LeadProject } from "./data/leadProjects";
-
-
 
 type Props = { whatsappNumber?: string; backHref?: string };
 
@@ -36,20 +34,40 @@ const Card: React.FC<{
       aria-label={`View ${p.company} lead generation case study`}
     >
       <div className="zlead-top">
-        <span className="zlead-roas">{p.roas} ROAS</span>
-        <span className="zlead-delivered">{p.leadsDelivered} leads</span>
+        {p.roas ? (
+          <span className="zlead-roas">{p.roas} ROAS</span>
+        ) : (
+          <span className="zlead-roas">{p.cpl ?? p.source}</span>
+        )}
+        <span className="zlead-delivered">
+          {p.leadsDelivered}
+          {p.unit ? <small> {p.unit}</small> : null}
+        </span>
       </div>
-      <div className="zlead-funnel" aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
+
+      {p.image ? (
+        <div className="zlead-shot">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={p.image} alt={p.imageAlt ?? `${p.company} results`} loading="lazy" />
+        </div>
+      ) : (
+        <div className="zlead-funnel" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </div>
+      )}
+
       <div className="zlead-meta">
         <div className="zlead-cpl">
           {p.cpl ? (
-            <>Average CPL: <b>{p.cpl}</b></>
+            <>
+              Avg. cost per result: <b>{p.cpl}</b>
+            </>
           ) : (
-            <>Tracked: <b>{p.period}</b></>
+            <>
+              Tracked: <b>{p.period}</b>
+            </>
           )}
         </div>
         <div className="zlead-cap">
@@ -94,22 +112,41 @@ const Detail: React.FC<{ p: LeadProject; wa: string; onClose: () => void }> = ({
           </button>
         </div>
         <div className="zs-sheet-body">
+          {p.image && (
+            <a
+              className="zlead-full"
+              href={p.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open full-size screenshot"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.image} alt={p.imageAlt ?? `${p.company} results`} />
+            </a>
+          )}
           <div className="zs-stats">
             <div>
-              <span>{p.cpl ? "Cost per lead" : "Data source"}</span>
+              <span>{p.cpl ? "Avg. cost per result" : "Data source"}</span>
               <b style={{ color: "var(--purple)" }}>{p.cpl ?? p.source}</b>
             </div>
             <div>
-              <span>Verified enquiries</span>
+              <span>{p.unit ? `Total ${p.unit}` : "Verified enquiries"}</span>
               <b style={{ color: "var(--purple)" }}>{p.leadsDelivered}</b>
             </div>
-            <div>
-              <span>Return on ad spend</span>
-              <b>{p.roas}</b>
-            </div>
+            {p.roas ? (
+              <div>
+                <span>Return on ad spend</span>
+                <b>{p.roas}</b>
+              </div>
+            ) : (
+              <div>
+                <span>Data source</span>
+                <b>{p.source}</b>
+              </div>
+            )}
           </div>
           <div>
-            <h3 className="zs-h3">Funnel</h3>
+            <h3 className="zs-h3">{p.breakdownTitle ?? "Funnel"}</h3>
             <div className="zlead-steps">
               {p.funnelStages.map((s, idx) => (
                 <div key={idx} className="zlead-step">
@@ -186,11 +223,17 @@ const CSS = `
 @media (max-width:1000px){ .zlead-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:600px){ .zlead-grid{grid-template-columns:1fr} }
 
-.zlead-card{all:unset; box-sizing:border-box; cursor:pointer; background:#fff; color:var(--black); border:1.5px solid var(--black); border-radius:14px; padding:clamp(18px,2.4vw,28px); display:flex; flex-direction:column; justify-content:space-between; gap:22px; transition:transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, background .3s}
+.zlead-card{all:unset; box-sizing:border-box; cursor:pointer; background:#fff; color:var(--black); border:1.5px solid var(--black); border-radius:14px; padding:clamp(18px,2.4vw,28px); display:flex; flex-direction:column; justify-content:space-between; gap:18px; transition:transform .4s cubic-bezier(.2,.8,.2,1), border-color .3s, background .3s}
 .zlead-card:hover{transform:translateY(-6px); border-color:var(--purple); background:var(--tint)}
-.zlead-top{display:flex; justify-content:space-between; align-items:center}
-.zlead-roas{background:var(--black); color:#fff; font-weight:800; font-size:1.05rem; padding:4px 12px; border-radius:999px}
-.zlead-delivered{font-weight:800; font-size:1.45rem; letter-spacing:-.02em; color:var(--purple)}
+.zlead-top{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.zlead-roas{background:var(--black); color:#fff; font-weight:800; font-size:.95rem; padding:4px 12px; border-radius:999px; white-space:nowrap}
+.zlead-delivered{font-weight:800; font-size:1.45rem; letter-spacing:-.02em; color:var(--purple); text-align:right}
+.zlead-delivered small{font-size:.72rem; font-weight:600; opacity:.7; letter-spacing:0}
+
+.zlead-shot{position:relative; aspect-ratio:16/10; overflow:hidden; border-radius:10px; border:1px solid rgba(0,0,0,.12); background:#fff; display:flex; align-items:center; justify-content:center}
+.zlead-shot img{width:100%; height:100%; object-fit:contain; object-position:center; display:block; transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.zlead-card:hover .zlead-shot img{transform:scale(1.03)}
+
 .zlead-funnel{display:flex; flex-direction:column; gap:6px; padding:12px 0}
 .zlead-funnel i{display:block; height:7px; border-radius:4px}
 .zlead-funnel i:nth-child(1){width:100%; background:var(--purple)}
@@ -200,7 +243,10 @@ const CSS = `
 .zlead-cpl{font-size:.9rem; opacity:.8}
 .zlead-cap{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
 .zlead-ind{font-weight:800; font-size:1.15rem; letter-spacing:-.02em}
-.zlead-kind{font-size:.88rem; opacity:.65}
+.zlead-kind{font-size:.88rem; opacity:.65; text-align:right}
+
+.zlead-full{display:block; border-radius:10px; overflow:hidden; border:1px solid rgba(0,0,0,.12); background:#fff}
+.zlead-full img{display:block; width:100%; height:auto}
 
 .zlead-steps{display:flex; flex-direction:column; gap:8px}
 .zlead-step{display:flex; align-items:center; padding:10px 14px; background:var(--tint); border-radius:8px; font-size:.92rem}
@@ -209,5 +255,5 @@ const CSS = `
 .zlead-chips{display:flex; flex-wrap:wrap; gap:8px}
 .zlead-chips span{background:var(--purple); color:#fff; font-weight:600; font-size:.85rem; padding:6px 14px; border-radius:999px}
 
-@media (prefers-reduced-motion: reduce){ .zlead-card{transition:none} }
+@media (prefers-reduced-motion: reduce){ .zlead-card, .zlead-shot img{transition:none} }
 `;
