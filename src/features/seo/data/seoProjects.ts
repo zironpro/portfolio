@@ -3,7 +3,7 @@ export type SeoCategory = "seo" | "geo";
 export type SeoProject = {
   id: string;
   category: SeoCategory;
-  industry: string;
+  industry?: string;
   kind: string;
   rank: string;
   trafficGrowth: string;

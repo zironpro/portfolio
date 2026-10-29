@@ -1,6 +1,6 @@
 export type PrintProject = {
   id: string;
-  industry: string;
+  industry?: string;
   kind: string;
   finish: string;
   stock: string;

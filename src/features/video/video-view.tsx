@@ -119,13 +119,12 @@ function Card({
       className={`zv-card zs-reveal${seen ? " in" : ""}`}
       style={{ "--d": `${(i % 4) * 90}ms` } as CSSProperties}
       onClick={() => onOpen(v)}
-      aria-label={`Play ${v.title} — ${v.industry} ${v.kind}`}
+      aria-label={`Play ${v.title} — ${v.kind}`}
     >
       <Thumb v={v} />
       <span className="zv-cap">
-        <span className="zv-ind-tag">{v.industry}</span>
         <span className="zv-ind">{v.title}</span>
-        <span className="zv-kind">{v.kind}</span>
+        {/* <span className="zv-kind">{v.kind}</span> */}
       </span>
     </button>
   );
@@ -159,9 +158,7 @@ function Player({
       <div className="zv-modal-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="zv-modal-top">
           <div className="zv-modal-title">
-            <span className="zv-modal-tag">
-              {v.industry} • {v.kind}
-            </span>
+            <span className="zv-modal-tag">{v.kind}</span>
             <b>{v.title}</b>
           </div>
           <div className="zv-modal-actions">

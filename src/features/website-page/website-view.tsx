@@ -46,7 +46,7 @@ const Card: React.FC<{
       </span>
       <span className="zw-cap">
         <span className="zw-ind">{p.title}</span>
-        <span className="zw-kind">{p.kind}</span>
+        {/* <span className="zw-kind">{p.kind}</span> */}
       </span>
     </button>
   );
@@ -72,7 +72,7 @@ const DetailsModal: React.FC<{ p: Project; onClose: () => void }> = ({
         {/* Top bar */}
         <div className="zw-modal-head">
           <div className="zw-modal-title-group">
-            <span className="zw-modal-tag">{p.industry}</span>
+            <span className="zw-modal-tag">{p.kind}</span>
             <h2 className="zw-modal-title">{p.title}</h2>
           </div>
           <button

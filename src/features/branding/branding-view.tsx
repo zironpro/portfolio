@@ -91,11 +91,8 @@ const Card = memo(function Card({
         </span>
       </span>
       <span className="zb-cap">
-        <span className="zb-title-wrap">
-          <span className="zb-ind">{p.title}</span>
-          <span className="zb-ind-tag">{p.industry}</span>
-        </span>
-        <span className="zb-kind">{p.kind}</span>
+        <span className="zb-ind">{p.title}</span>
+        {/* <span className="zb-kind">{p.kind}</span> */}
       </span>
     </button>
   );
@@ -126,7 +123,7 @@ const BrandModal: React.FC<{
       <div className="zb-modal-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="zb-modal-head">
           <div className="zb-modal-title-group">
-            <span className="zb-modal-tag">{p.industry}</span>
+            {/* <span className="zb-modal-tag">{p.kind}</span> */}
             <h2 className="zb-modal-title">{p.title}</h2>
           </div>
           <div className="zb-modal-actions">

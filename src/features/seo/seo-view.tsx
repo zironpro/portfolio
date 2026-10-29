@@ -93,10 +93,9 @@ const Card: React.FC<{
       </div>
 
       <div className="zseo-info">
-        <p className="zseo-kw">“{p.topKeyword}”</p>
+        {/* <p className="zseo-kw">“{p.topKeyword}”</p> */}
         <div className="zseo-cap">
-          <span className="zseo-ind">{p.industry}</span>
-          <span className="zseo-kind">{p.kind}</span>
+          <span className="zseo-ind">“{p.topKeyword}”</span>
         </div>
       </div>
     </button>
@@ -124,8 +123,7 @@ const Detail: React.FC<{
       >
         <div className="zs-sheet-top">
           <div>
-            <b className="zs-sheet-ind">{p.industry}</b>
-            <span className="zs-sheet-kind">{p.kind}</span>
+            <b className="zs-sheet-ind">{p.kind}</b>
           </div>
           <button
             type="button"

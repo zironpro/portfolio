@@ -52,15 +52,14 @@ const Card: React.FC<{
       className={`zprint-card zs-reveal ${seen ? "in" : ""}`}
       style={{ ["--d" as string]: `${(i % 3) * 90}ms` }}
       onClick={() => onOpen(p)}
-      aria-label={`View ${p.industry} ${p.kind}`}
+      aria-label={`View ${p.kind}`}
     >
       <div className="zprint-cover" style={{ aspectRatio: p.ratio }}>
         <PrintPlate p={p} />
         <span className="zprint-stock-tag">{p.stock}</span>
       </div>
       <div className="zprint-cap">
-        <span className="zprint-ind">{p.industry}</span>
-        <span className="zprint-kind">{p.kind}</span>
+        <span className="zprint-ind">{p.kind}</span>
       </div>
     </button>
   );
@@ -77,14 +76,13 @@ const Detail: React.FC<{
       className="zs-modal"
       role="dialog"
       aria-modal="true"
-      aria-label={`${p.industry} ${p.kind}`}
+      aria-label={p.kind}
       onClick={onClose}
     >
       <div className="zs-sheet" onClick={(e) => e.stopPropagation()}>
         <div className="zs-sheet-top">
           <div>
-            <b className="zs-sheet-ind">{p.industry}</b>
-            <span className="zs-sheet-kind">{p.kind}</span>
+            <b className="zs-sheet-ind">{p.kind}</b>
           </div>
           <button
             type="button"

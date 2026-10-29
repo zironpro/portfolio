@@ -1,7 +1,7 @@
 export type Video = {
   id: string;
   title: string;
-  industry: string;
+  industry?: string;
   kind: "Ad film" | "Reel" | "Product";
   duration: string;
   slug: string; // files: /video/{slug}.webm & /video/{slug}.mp4
