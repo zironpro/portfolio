@@ -6,6 +6,21 @@ export type Video = {
   duration: string;
   slug: string; // files: /video/{slug}.webm & /video/{slug}.mp4
   description: string;
+  aspect?: "portrait" | "landscape"; // default: portrait (9:16)
+};
+
+/** Full-width video shown at the top of the page (16:9).
+ *  Files needed: /public/video/brand-showreel.webm & .mp4 */
+export const HERO_VIDEO: Video = {
+  id: "hero",
+  title: "Aia AI",
+  industry: "Production House",
+  kind: "Ad film",
+  duration: "1:05",
+  slug: "aia",
+  aspect: "landscape",
+  description:
+    "A look at our latest work across real estate, wellness, industrial and legal brands, scripted, shot and edited in-house in the UAE.",
 };
 
 export const VIDEOS: Video[] = [
@@ -71,7 +86,7 @@ export const VIDEOS: Video[] = [
   },
   {
     id: "v7",
-    title: "Energex Power",
+    title: "Energex",
     industry: "Equipment Rental",
     kind: "Product",
     duration: "0:21",
@@ -121,7 +136,7 @@ export const VIDEOS: Video[] = [
   },
   {
     id: "v12",
-    title: "Energex Silent Power",
+    title: "Energex",
     industry: "Equipment Rental",
     kind: "Product",
     duration: "0:29",

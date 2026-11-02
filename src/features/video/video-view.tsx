@@ -2,9 +2,9 @@
 
 /**
  * Ziron Pro — Video page (route: /video)
- * Vertical 9:16 reels, 4 per row on desktop. Cards show the video's own first
- * frame (no poster images) and play silently on hover. Click opens a modal
- * player with sound and project details.
+ * Full-width hero video on top, then vertical 9:16 reels, 4 per row on desktop.
+ * Cards show the video's own first frame (no poster images) and play silently
+ * on hover. Click opens a modal player with sound and project details.
  */
 
 import {
@@ -21,9 +21,7 @@ import Shell, {
   useModal,
   waLink,
 } from "../CategoryShell";
-import { VIDEOS, type Video } from "./data/videos";
-
-
+import { VIDEOS, HERO_VIDEO, type Video } from "./data/videos";
 
 /** WebM first (smaller), MP4 as fallback. `hash` e.g. "#t=0.1" shows a frame. */
 const Sources = ({ v, hash = "" }: { v: Video; hash?: string }) => (
@@ -32,6 +30,33 @@ const Sources = ({ v, hash = "" }: { v: Video; hash?: string }) => (
     <source src={`/video/${v.slug}.mp4${hash}`} type="video/mp4" />
   </>
 );
+
+/* ---------- Full-width hero ----------
+ * Autoplays muted and loops. Title & watch action on the bottom.
+ * Clicking it opens the modal player with sound. */
+function Hero({ v, onOpen }: { v: Video; onOpen: (v: Video) => void }) {
+  return (
+    <button
+      type="button"
+      className="zv-hero"
+      onClick={() => onOpen(v)}
+      aria-label={`Play ${v.title} with sound`}
+    >
+      <video autoPlay muted loop playsInline preload="auto" aria-hidden="true">
+        <Sources v={v} />
+      </video>
+      <div className="zv-hero-bottom">
+        <div className="zv-hero-info">
+          {v.kind && <span className="zv-hero-tag">{v.kind}</span>}
+          <h2 className="zv-hero-title">{v.title}</h2>
+        </div>
+        <span className="zv-hero-watch">
+          Watch with sound <ArrowUpRight />
+        </span>
+      </div>
+    </button>
+  );
+}
 
 /* ---------- Card thumbnail ----------
  * The video itself is the thumbnail: paused on its first frame, no poster.
@@ -142,6 +167,8 @@ function Player({
 }) {
   useModal(onClose);
 
+  const wide = v.aspect === "landscape";
+
   const waHref = waLink(
     whatsappNumber,
     `Hi Ziron Pro, I saw the "${v.title}" video and would like to produce a similar video.`,
@@ -155,7 +182,10 @@ function Player({
       aria-label={`${v.title} — ${v.kind}`}
       onClick={onClose}
     >
-      <div className="zv-modal-sheet" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`zv-modal-sheet${wide ? " zv-wide" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="zv-modal-top">
           <div className="zv-modal-title">
             <span className="zv-modal-tag">{v.kind}</span>
@@ -182,7 +212,7 @@ function Player({
           </div>
         </div>
 
-        <div className="zv-player">
+        <div className={`zv-player${wide ? " zv-wide" : ""}`}>
           <video controls autoPlay playsInline>
             <Sources v={v} />
           </video>
@@ -224,6 +254,10 @@ export default function VideoPage({
       }
     >
       <style>{CSS}</style>
+
+      {/* Full-width video on top */}
+      <Hero v={HERO_VIDEO} onOpen={setOpen} />
+
       <div className="zv-grid">
         {VIDEOS.map((v, i) => (
           <Card key={v.id} v={v} i={i} onOpen={setOpen} />
@@ -234,6 +268,60 @@ export default function VideoPage({
 }
 
 const CSS = `
+/* Hero (full width of the content area, no horizontal overflow) */
+.zv-hero{
+  all:unset;
+  box-sizing:border-box;
+  display:block;
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:80vh;
+  overflow:hidden;
+  cursor:pointer;
+  background:var(--black);
+  border-radius:14px;
+  margin:0 0 clamp(24px,4vw,56px);
+}
+.zv-hero:focus-visible{outline:2px solid var(--purple);outline-offset:4px}
+.zv-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.zv-hero-bottom{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:16px;
+  padding:clamp(16px,3.5vw,36px);
+  background:linear-gradient(to top, rgba(13,20,32,.88) 0%, rgba(13,20,32,.45) 60%, transparent 100%);
+  pointer-events:none;
+}
+.zv-hero-info{display:flex;flex-direction:column;gap:6px;text-align:left}
+.zv-hero-tag{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--purple-2)}
+.zv-hero-title{margin:0;font-size:clamp(1.25rem,2.5vw,2.2rem);font-weight:800;letter-spacing:-.025em;color:#fff;line-height:1.2}
+.zv-hero-watch{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.94);
+  color:var(--black);
+  font-size:.85rem;
+  font-weight:700;
+  padding:10px 18px;
+  border-radius:999px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+  transition:transform .2s ease,background .2s ease;
+  flex-shrink:0;
+}
+.zv-hero:hover .zv-hero-watch{background:#fff;transform:translateY(-2px)}
+@media(max-width:600px){
+  .zv-hero-bottom{flex-direction:column;align-items:flex-start;gap:12px;padding:16px}
+}
+
+/* Grid */
 .zv-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
@@ -265,6 +353,7 @@ const CSS = `
 /* Modal */
 .zv-modal{position:fixed;inset:0;z-index:200;background:rgba(13,20,32,.88);backdrop-filter:blur(12px);color:#fff;display:flex;align-items:center;justify-content:center;padding:clamp(12px,2.5vw,24px);animation:zsFade .25s ease}
 .zv-modal-sheet{width:min(440px,94vw);max-height:94vh;display:flex;flex-direction:column;background:#0E131F;border-radius:20px;border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 64px rgba(0,0,0,.5);overflow:hidden;animation:zvPop .35s cubic-bezier(.2,.8,.2,1)}
+.zv-modal-sheet.zv-wide{width:min(960px,94vw)}
 @keyframes zvPop{from{opacity:0;transform:scale(.96) translateY(20px)}}
 
 .zv-modal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
@@ -278,6 +367,7 @@ const CSS = `
 .zv-x:hover{background:rgba(255,255,255,.25)}
 
 .zv-player{width:100%;aspect-ratio:9/16;max-height:min(68vh,640px);background:#000}
+.zv-player.zv-wide{aspect-ratio:16/9;max-height:70vh}
 .zv-player video{width:100%;height:100%;object-fit:contain}
 
 .zv-modal-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.08)}
