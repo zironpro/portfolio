@@ -5,7 +5,7 @@
  * ---------------------------------------------------------------
  *  1. Load: the headline rises in word by word.
  *  2. ONE short scroll (60vh): the headline lifts and shrinks, and the
- *     six service links rise into place. Nothing else to scroll through.
+ *     seven service links rise into place. Nothing else to scroll through.
  *  3. The hero then un-pins and the page continues.
  *
  * Background: a thick purple ring with a ball running around it,
@@ -64,6 +64,12 @@ const ITEMS: Item[] = [
     title: "Printing",
     industries: "Packaging, menus & brand stationery",
     image: "/categories/printing.png",
+  },
+  {
+    href: "/posts",
+    title: "Posts",
+    industries: "Social media for brands & local businesses",
+    image: "/categories/posts.png",
   },
 ];
 
@@ -185,7 +191,7 @@ export default function Hero({ whatsappNumber = "971542588446" }: HeroProps) {
           <h1
             className="zp-headline"
             style={{
-              transform: `translate3d(0, ${-27 * t}vh, 0) scale(${1 - 0.5 * t})`,
+              transform: `translate3d(0, ${-29 * t}vh, 0) scale(${1 - 0.5 * t})`,
             }}
           >
             <span className="zp-line">
@@ -214,7 +220,8 @@ export default function Hero({ whatsappNumber = "971542588446" }: HeroProps) {
               transform: `translateY(${-p * 80}px)`,
             }}
           >
-           Websites, branding, video, search, leads, social media management and print.
+            Websites, branding, video, search, leads, social media management
+            and print.
           </p>
         </div>
 
@@ -357,16 +364,16 @@ const CSS = `
 .zp-cue span{width:1.5px; height:40px; background:linear-gradient(var(--purple), transparent); transform-origin:top; animation:zpDrip 1.6s ease-in-out infinite}
 @keyframes zpDrip{0%{transform:scaleY(0)} 60%{transform:scaleY(1)} 100%{transform:scaleY(1); opacity:0}}
 
-/* chooser */
+/* chooser (7 cards on desktop) */
 .zp-choose{
   position:absolute; z-index:60; left:clamp(14px,2.8vw,54px); right:clamp(14px,2.8vw,54px); bottom:clamp(16px,4vh,44px);
   height:min(50vh,440px);
-  display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(10px,1.2vw,20px);
+  display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:clamp(8px,1vw,18px);
   will-change:transform,opacity;
 }
 .zp-item{
   position:relative; display:flex; flex-direction:column; justify-content:space-between;
-  padding:clamp(14px,1.4vw,22px); text-decoration:none;
+  padding:clamp(12px,1.2vw,20px); text-decoration:none;
   background:var(--white); color:var(--black); border:1.5px solid var(--black); border-radius:20px;
   overflow:hidden;
   transition:background .25s cubic-bezier(.2,.8,.2,1), color .25s cubic-bezier(.2,.8,.2,1), border-color .25s cubic-bezier(.2,.8,.2,1), transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1);
@@ -377,8 +384,8 @@ const CSS = `
   box-shadow:0 18px 36px -8px rgba(77,17,168,.3);
 }
 
-.zp-item-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px}
-.zp-item-title{font-weight:800; letter-spacing:-.03em; line-height:1; font-size:clamp(1.2rem,1.9vw,2rem)}
+.zp-item-top{display:flex; justify-content:space-between; align-items:flex-start; gap:6px}
+.zp-item-title{font-weight:800; letter-spacing:-.03em; line-height:1; font-size:clamp(1.05rem,1.55vw,1.8rem)}
 .zp-go{flex-shrink:0; color:var(--purple); margin-top:2px; transition:color .25s, transform .25s}
 .zp-item:hover .zp-go,.zp-item:focus-visible .zp-go{color:var(--white); transform:translate(3px, -2px)}
 
@@ -410,27 +417,29 @@ const CSS = `
 }
 
 .zp-item-ind{
-  font-size:clamp(.75rem,.85vw,.9rem); line-height:1.3; font-weight:400; max-width:22ch;
+  font-size:clamp(.7rem,.8vw,.88rem); line-height:1.3; font-weight:400; max-width:22ch;
   color:rgba(13,20,32,.72);
   transition:color .25s;
 }
 .zp-item:hover .zp-item-ind,.zp-item:focus-visible .zp-item-ind{color:rgba(255,255,255,.9)}
 
-/* tablet: 3 x 2 */
+/* tablet: 4 columns x 2 rows, last card spans 2 */
 @media (max-width:1000px){
-  .zp-choose{grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(2,1fr); height:min(54vh,480px); gap:clamp(10px,1.4vw,16px)}
+  .zp-choose{grid-template-columns:repeat(4,minmax(0,1fr)); grid-template-rows:repeat(2,1fr); height:min(54vh,480px); gap:clamp(10px,1.4vw,16px)}
+  .zp-item:last-child{grid-column:span 2}
   .zp-item{padding:clamp(12px,1.5vw,18px)}
-  .zp-item-title{font-size:clamp(1.2rem,2.8vw,1.65rem)}
-  .zp-item-ind{font-size:.76rem}
+  .zp-item-title{font-size:clamp(1.1rem,2.6vw,1.55rem)}
+  .zp-item-ind{font-size:.74rem}
   .zp-item-media{margin:4px 0}
   .zp-item-oval{width:min(84%,120px); height:min(86%,106px)}
 }
-/* mobile: 2 x 3 */
+/* mobile: 2 columns x 4 rows, last card full width */
 @media (max-width:560px){
-  .zp-choose{grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(3,1fr); height:min(60vh,500px); gap:8px}
+  .zp-choose{grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(4,1fr); height:min(72vh,600px); gap:8px}
+  .zp-item:last-child{grid-column:span 2}
   .zp-item{border-radius:16px; padding:10px 12px}
-  .zp-item-title{font-size:1.15rem}
-  .zp-item-ind{font-size:.68rem; line-height:1.2}
+  .zp-item-title{font-size:1.1rem}
+  .zp-item-ind{font-size:.66rem; line-height:1.2}
   .zp-item-media{margin:2px 0}
   .zp-item-oval{width:min(86%,90px); height:min(88%,78px)}
   .zp-go{width:16px; height:16px}

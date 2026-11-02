@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s | Ziron Pro",
   },
   description:
-    "Ziron Pro is a premier creative and digital agency in UAE. We deliver high-performance websites, iconic brand identities, commercial video production, #1 Google & AI search rankings (SEO & GEO), verified customer acquisition funnels, and precision printing.",
+    "Ziron Pro is a premier creative and digital agency in UAE. We deliver high-performance websites, iconic brand identities, commercial video production, #1 Google & AI search rankings (SEO & GEO), verified customer acquisition funnels, precision printing, and high-converting social media creatives.",
   applicationName: "Ziron Pro",
   authors: [{ name: "Ziron Pro", url: "https://zironpro.ae" }],
   creator: "Ziron Pro",
@@ -48,6 +48,8 @@ export const metadata: Metadata = {
     "GEO AI Search Optimization",
     "Lead Generation UAE",
     "Printing Services UAE",
+    "Social Media Creatives Dubai",
+    "Social Media Post Design",
     "Performance Marketing Dubai",
   ],
   manifest: "/site.webmanifest",
