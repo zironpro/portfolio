@@ -42,6 +42,12 @@ const ITEMS: Item[] = [
     image: "/categories/branding.png",
   },
   {
+    href: "/posts",
+    title: "Posts",
+    industries: "Social media for brands & local businesses",
+    image: "/categories/posts.png",
+  },
+  {
     href: "/video",
     title: "Video",
     industries: "Hospitality, events & product launches",
@@ -64,12 +70,6 @@ const ITEMS: Item[] = [
     title: "Printing",
     industries: "Packaging, menus & brand stationery",
     image: "/categories/printing.png",
-  },
-  {
-    href: "/posts",
-    title: "Posts",
-    industries: "Social media for brands & local businesses",
-    image: "/categories/posts.png",
   },
 ];
 

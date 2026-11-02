@@ -41,14 +41,14 @@ const Card: React.FC<{
           className="zpost-img"
           loading="lazy"
         />
-        <span className="zpost-badge">{p.client}</span>
+        {/* <span className="zpost-badge">{p.client}</span> */}
         <span className="zpost-view">
           Inspect creative <ArrowUpRight />
         </span>
       </div>
       <div className="zpost-cap">
-        <span className="zpost-kind">{p.kind}</span>
-        <span className="zpost-ind">{p.title}</span>
+        {/* <span className="zpost-kind">{p.client}</span> */}
+        <span className="zpost-ind">{p.client}</span>
       </div>
     </button>
   );

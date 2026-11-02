@@ -99,4 +99,44 @@ export const VIDEOS: Video[] = [
     description:
       "Commercial high-rise installation reel showing Solar Safety Insulation LLC applying heat-reflective architectural safety film on glazed facades.",
   },
+  {
+    id: "v10",
+    title: "Biznorx Realty",
+    industry: "Real Estate",
+    kind: "Reel",
+    duration: "0:17",
+    slug: "biznorx",
+    description:
+      "High-altitude aerial cinematography and architectural reels capturing skyline urban developments, luxury residences, and community investments.",
+  },
+  {
+    id: "v11",
+    title: "Crystal Shield",
+    industry: "Architectural Glazing",
+    kind: "Product",
+    duration: "0:15",
+    slug: "crystal-shield",
+    description:
+      "Modern architectural film showcase presenting UV solar heat rejection, ceramic tint insulation, and glass clarity on luxury villas.",
+  },
+  {
+    id: "v12",
+    title: "Energex Silent Power",
+    industry: "Equipment Rental",
+    kind: "Product",
+    duration: "0:29",
+    slug: "energex-5",
+    description:
+      "Dynamic construction power spotlight on silent diesel generators (15 to 1500 kVA), ambient heat design, and continuous turnkey site support.",
+  },
+  {
+    id: "v13",
+    title: "Maxline Global",
+    industry: "Logistics & Supply Chain",
+    kind: "Ad film",
+    duration: "0:30",
+    slug: "maxline",
+    description:
+      "Commercial showcase following Maxline Global Logistics' fleet operations, cross-border freight handling, and Jebel Ali warehouse distribution.",
+  },
 ];

@@ -98,7 +98,7 @@ export const POST_PROJECTS: PostProject[] = [
   {
     id: "post-5",
     title: "Safety Film: Built to Hold, Designed to Protect",
-    client: "Crystal Shield & Madico",
+    client: "Crystal Shield",
     kind: "Architectural Glass Protection",
     format: "Product Authority · 3:4 Portrait",
     platform: "Instagram, LinkedIn & Meta Ads",
